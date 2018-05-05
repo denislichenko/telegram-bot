@@ -102,13 +102,6 @@
             // 
             // btnLookUsers
             // 
-            this.btnLookUsers.Location = new System.Drawing.Point(15, 354);
-            this.btnLookUsers.Name = "btnLookUsers";
-            this.btnLookUsers.Size = new System.Drawing.Size(418, 28);
-            this.btnLookUsers.TabIndex = 7;
-            this.btnLookUsers.Text = "Просмотреть список пользователей";
-            this.btnLookUsers.UseVisualStyleBackColor = true;
-            this.btnLookUsers.Click += new System.EventHandler(this.btnLookUsers_Click);
             // 
             // Form1
             // 

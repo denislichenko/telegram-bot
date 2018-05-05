@@ -57,24 +57,6 @@ namespace TelegramBot
                         catch { }
                     });
 
-                    //using (UserContext context = new UserContext())
-                    //{
-                    //    try
-                    //    {
-                    //        var users = context.Users;
-                    //        foreach (User user in users)
-                    //        {
-                    //            if (message.From.Id != user.userId)
-                    //            {
-                    //                User newUser = new User { Id = 0, userId = 2 };
-                    //                context.Users.Add(newUser);
-                    //                context.SaveChanges();
-                    //            }
-                    //        }
-                    //    }
-                    //    catch { }
-                    //}
-
                     if (message.Type == Telegram.Bot.Types.Enums.MessageType.TextMessage)
                     {
                         var msg = message.Text.ToLower();
@@ -177,23 +159,6 @@ namespace TelegramBot
                 rtbInput.Text += "Бот запущен!\n";
                 this.bw.RunWorkerAsync(text);
             }
-
-            using (UserContext context = new UserContext())
-            {
-                try
-                {
-                            User newUser = new User { Id = 0, userId = 2 };
-                            context.Users.Add(newUser);
-                            context.SaveChanges();
-                }
-                catch { }
-            }
-        }
-
-        private void btnLookUsers_Click(object sender, EventArgs e)
-        {
-            Form2 form2 = new Form2();
-            form2.Show(); 
         }
     }
 }
