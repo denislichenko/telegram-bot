@@ -19,8 +19,8 @@ namespace TelegramBot
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "dBDataSet.Users". При необходимости она может быть перемещена или удалена.
-            this.usersTableAdapter.Fill(this.dBDataSet.Users);
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "dBDataSet3.Users". При необходимости она может быть перемещена или удалена.
+            this.usersTableAdapter.Fill(this.dBDataSet3.Users);
 
         }
     }

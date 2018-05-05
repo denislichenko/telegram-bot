@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.dBDataSet = new TelegramBot.DBDataSet();
+            this.dBDataSet3 = new TelegramBot.DBDataSet3();
             this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.usersTableAdapter = new TelegramBot.DBDataSetTableAdapters.UsersTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).BeginInit();
+            this.usersTableAdapter = new TelegramBot.DBDataSet3TableAdapters.UsersTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,20 +43,20 @@
             this.listBox1.DisplayMember = "userId";
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(12, 12);
+            this.listBox1.Location = new System.Drawing.Point(45, 33);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(776, 420);
+            this.listBox1.Size = new System.Drawing.Size(120, 84);
             this.listBox1.TabIndex = 0;
             // 
-            // dBDataSet
+            // dBDataSet3
             // 
-            this.dBDataSet.DataSetName = "DBDataSet";
-            this.dBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.dBDataSet3.DataSetName = "DBDataSet3";
+            this.dBDataSet3.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // usersBindingSource
             // 
             this.usersBindingSource.DataMember = "Users";
-            this.usersBindingSource.DataSource = this.dBDataSet;
+            this.usersBindingSource.DataSource = this.dBDataSet3;
             // 
             // usersTableAdapter
             // 
@@ -71,7 +71,7 @@
             this.Name = "Form2";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.usersBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -80,8 +80,8 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBox1;
-        private DBDataSet dBDataSet;
+        private DBDataSet3 dBDataSet3;
         private System.Windows.Forms.BindingSource usersBindingSource;
-        private DBDataSetTableAdapters.UsersTableAdapter usersTableAdapter;
+        private DBDataSet3TableAdapters.UsersTableAdapter usersTableAdapter;
     }
 }
