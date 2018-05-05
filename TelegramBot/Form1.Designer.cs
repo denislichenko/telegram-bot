@@ -35,6 +35,7 @@
             this.rtbUndefined = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnLookUsers = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -99,11 +100,22 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "UNDEFINED CMD";
             // 
+            // btnLookUsers
+            // 
+            this.btnLookUsers.Location = new System.Drawing.Point(15, 354);
+            this.btnLookUsers.Name = "btnLookUsers";
+            this.btnLookUsers.Size = new System.Drawing.Size(418, 28);
+            this.btnLookUsers.TabIndex = 7;
+            this.btnLookUsers.Text = "Просмотреть список пользователей";
+            this.btnLookUsers.UseVisualStyleBackColor = true;
+            this.btnLookUsers.Click += new System.EventHandler(this.btnLookUsers_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 379);
+            this.ClientSize = new System.Drawing.Size(865, 416);
+            this.Controls.Add(this.btnLookUsers);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.rtbUndefined);
@@ -127,6 +139,7 @@
         private System.Windows.Forms.RichTextBox rtbUndefined;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnLookUsers;
     }
 }
 

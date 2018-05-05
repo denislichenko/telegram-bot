@@ -57,6 +57,24 @@ namespace TelegramBot
                         catch { }
                     });
 
+                    using (UserContext context = new UserContext())
+                    {
+                        try
+                        {
+                            var users = context.Users;
+                            foreach (User user in users)
+                            {
+                                if (message.From.Id != user.userId)
+                                {
+                                    User newUser = new User { userId = message.From.Id };
+                                    context.Users.Add(newUser);
+                                    context.SaveChanges();
+                                }
+                            }
+                        }
+                        catch { }
+                    }
+
                     if (message.Type == Telegram.Bot.Types.Enums.MessageType.TextMessage)
                     {
                         var msg = message.Text.ToLower();
@@ -72,15 +90,7 @@ namespace TelegramBot
 
                             else if (message.Text == "/start")
                             {
-                                // KeyboardButtons
-                                var markup = new Telegram.Bot.Types.ReplyMarkups.ReplyKeyboardMarkup(new[]
-                                {
-                                    new Telegram.Bot.Types.KeyboardButton("Привет"),
-                                    new Telegram.Bot.Types.KeyboardButton("Ку"),
-                                    new Telegram.Bot.Types.KeyboardButton("Здарова"),
-                            });
-                                markup.OneTimeKeyboard = true;
-                                await Bot.SendTextMessageAsync(message.Chat.Id, "Поздоровайтесь! :)", replyMarkup: markup); // Описание действия 
+                                await Bot.SendTextMessageAsync(message.Chat.Id, "Привет! :)", replyToMessageId: message.MessageId); // Описание действия 
                             }
 
                             else if (msg.Contains("пидор") || msg.Contains("дурак") || msg.Contains("чмо") || msg.Contains("хуй"))
@@ -88,8 +98,10 @@ namespace TelegramBot
                                 await Bot.SendTextMessageAsync(message.Chat.Id, "Я робот, я не могу им быть!", replyToMessageId: message.MessageId);
                             }
 
-                            else if(msg.Contains("бля"))
+                            else if (msg.Contains("бля"))
+                            {
                                 await Bot.SendTextMessageAsync(message.Chat.Id, "Сам ты бля!", replyToMessageId: message.MessageId);
+                            }
 
                             else if (msg.Contains("зовут"))
                             {
@@ -102,7 +114,7 @@ namespace TelegramBot
                                 await Bot.SendTextMessageAsync(message.Chat.Id, Words.mood[i], replyToMessageId: message.MessageId);
                             }
 
-                            else if(msg.Contains("олбанский") || msg.Contains("олбанском"))
+                            else if (msg.Contains("олбанский") || msg.Contains("олбанском"))
                             {
                                 int i = rnd.Next(0, Words.olbanskyi.Length);
                                 await Bot.SendTextMessageAsync(message.Chat.Id, Words.olbanskyi[i], replyToMessageId: message.MessageId);
@@ -113,14 +125,22 @@ namespace TelegramBot
 
                                 int i = rnd.Next(0, Words.cats.Length);
 
-                                Telegram.Bot.Types.FileToSend fl;
+                                Telegram.Bot.Types.FileToSend fileSend;
                                 Uri cat = new Uri(Words.cats[i]);
-                                fl.Url = cat;
-                                await Bot.SendPhotoAsync(message.Chat.Id, fl, "Мяу!");
+                                fileSend.Url = cat;
+
+                                await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Мяу!");
                             }
-                            else if (message.Text == "/smile")
+                            
+                            else if(message.Text == "/wallpapers" || msg.Contains("обои") || msg.Contains("рабочий стол"))
                             {
-                                await Bot.SendTextMessageAsync(message.Chat.Id, ":smirk:");
+                                int i = rnd.Next(0, Words.minimalism.Length);
+
+                                Telegram.Bot.Types.FileToSend fileSend;
+                                Uri wallpaper = new Uri(Words.minimalism[i]);
+                                fileSend.Url = wallpaper;
+
+                                await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал «обои»? Ставь на рабочий стол! :)");
                             }
 
                             else
@@ -157,6 +177,12 @@ namespace TelegramBot
                 rtbInput.Text += "Бот запущен!\n";
                 this.bw.RunWorkerAsync(text);
             }
+        }
+
+        private void btnLookUsers_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.Show(); 
         }
     }
 }
