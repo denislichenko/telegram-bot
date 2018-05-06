@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TelegramBot.Models;
 
 namespace TelegramBot
 {
@@ -104,14 +105,26 @@ namespace TelegramBot
 
                             else if (message.Text == "/sendcat")
                             {
+                                List<string> imageArr = new List<string>();
 
-                                int i = rnd.Next(0, Words.cats.Length);
+                                using (CatImagesContext context = new CatImagesContext())
+                                {
+                                    var images = context.Images;
+                                    foreach(CatImages image in images)
+                                    {
+                                        if(image.ImageUrl != null)
+                                            imageArr.Add(image.ImageUrl);
+                                    }
 
-                                Telegram.Bot.Types.FileToSend fileSend;
-                                Uri cat = new Uri(Words.cats[i]);
-                                fileSend.Url = cat;
+                                    int i = rnd.Next(0, imageArr.Count);
 
-                                await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Мяу!");
+                                    Telegram.Bot.Types.FileToSend fileSend;
+                                    Uri cat = new Uri(imageArr[i]);
+                                    fileSend.Url = cat;
+
+                                    await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Мяу!");
+                                }
+                                
                             }
                             
                             else if(message.Text == "/wallpapers" || msg.Contains("обои") || msg.Contains("рабочий стол"))
