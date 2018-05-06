@@ -127,7 +127,7 @@ namespace TelegramBot
                                 
                             }
                             
-                            else if(message.Text == "/wallpapers" || msg.Contains("обои") || msg.Contains("рабочий стол"))
+                            else if(message.Text == "/wallpaper" || msg.Contains("обои") || msg.Contains("рабочий стол"))
                             {
                                 List<string> imageArr = new List<string>();
 
