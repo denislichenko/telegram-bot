@@ -129,13 +129,26 @@ namespace TelegramBot
                             
                             else if(message.Text == "/wallpapers" || msg.Contains("обои") || msg.Contains("рабочий стол"))
                             {
-                                int i = rnd.Next(0, Words.minimalism.Length);
+                                List<string> imageArr = new List<string>();
 
-                                Telegram.Bot.Types.FileToSend fileSend;
-                                Uri wallpaper = new Uri(Words.minimalism[i]);
-                                fileSend.Url = wallpaper;
+                                using (WallpapersContext context = new WallpapersContext())
+                                {
+                                    var images = context.Images;
 
-                                await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал «обои»? Ставь на рабочий стол! :)");
+                                    foreach(Wallpapers image in images)
+                                    {
+                                        if (image.ImageUrl != null)
+                                            imageArr.Add(image.ImageUrl);
+                                    }
+
+                                    int i = rnd.Next(0, imageArr.Count);
+
+                                    Telegram.Bot.Types.FileToSend fileSend;
+                                    Uri wallpaper = new Uri(imageArr[i]);
+                                    fileSend.Url = wallpaper;
+
+                                    await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
+                                }
                             }
 
                             else

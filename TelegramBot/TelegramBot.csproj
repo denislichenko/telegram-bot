@@ -87,6 +87,8 @@
     </Compile>
     <Compile Include="Models\CatImages.cs" />
     <Compile Include="Models\CatImagesContext.cs" />
+    <Compile Include="Models\Wallpapers.cs" />
+    <Compile Include="Models\WallpapersContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\User.cs" />
