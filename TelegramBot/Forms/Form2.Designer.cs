@@ -35,11 +35,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.addNewCat = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.statusLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.statusLabel);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.addNewWallpaper);
             this.groupBox1.Controls.Add(this.textBox2);
@@ -48,7 +50,7 @@
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(776, 203);
+            this.groupBox1.Size = new System.Drawing.Size(776, 217);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Добавление нового объекта в Базу Данных";
@@ -105,11 +107,23 @@
             this.textBox1.Size = new System.Drawing.Size(440, 22);
             this.textBox1.TabIndex = 2;
             // 
+            // statusLabel
+            // 
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel.ForeColor = System.Drawing.Color.Black;
+            this.statusLabel.Location = new System.Drawing.Point(315, 179);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(74, 22);
+            this.statusLabel.TabIndex = 8;
+            this.statusLabel.Text = "Статус: ";
+            this.statusLabel.Visible = false;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 224);
+            this.ClientSize = new System.Drawing.Size(800, 241);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form2";
             this.Text = "Form2";
@@ -128,5 +142,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button addNewCat;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label statusLabel;
     }
 }
