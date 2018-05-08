@@ -27,12 +27,9 @@ namespace TelegramBot
 
         public async void bw_DoWorkAsync(object sender, DoWorkEventArgs e)
         {
-            string log = "";
             var worker = sender as BackgroundWorker;
             var key = e.Argument as String;
-
-            
-            // Если ключ не подходит - бросаем исключение 
+       
             try
             {
                 var Bot = new Telegram.Bot.TelegramBotClient(key); // Инициализируем
@@ -45,7 +42,6 @@ namespace TelegramBot
                     var update = updates.Update;
                     var message = update.Message;
                     if (message == null) return;
-
                     
                     rtbInput.Invoke((MethodInvoker)delegate
                     {
@@ -58,16 +54,22 @@ namespace TelegramBot
                         catch { }
                     });
 
+                    #region Команды бота
                     if (message.Type == Telegram.Bot.Types.Enums.MessageType.TextMessage)
                     {
-                        var msg = message.Text.ToLower();
-                        // Позже, возможно, оптимизирую! :)
+                        var msg = message.Text.ToLower(); // Переводим входящее сообщение в нижний регистр
+
+                        /* 
+                           Если длина сообщения меньше или равно 100, то соответствующее сообщение, 
+                           иначе выводим сообщение о превышении длины. 
+                        */
 
                         if (msg.Length <= 100)
                         {
                             if (msg.Contains("привет") || msg.Contains("ку") || msg.Contains("здарова"))
                             {
-                                int i = rnd.Next(0, Words.hello.Length);
+                                // Генерируем рандомное значение переменной i, затем выводим ответ пользователю
+                                int i = rnd.Next(0, Words.hello.Length); 
                                 await Bot.SendTextMessageAsync(message.Chat.Id, Words.hello[i], replyToMessageId: message.MessageId);
                             }
 
@@ -76,93 +78,94 @@ namespace TelegramBot
                                 await Bot.SendTextMessageAsync(message.Chat.Id, "Привет! :)", replyToMessageId: message.MessageId); // Описание действия 
                             }
 
-                            else if (msg.Contains("пидор") || msg.Contains("дурак") || msg.Contains("чмо") || msg.Contains("хуй"))
-                            {
-                                await Bot.SendTextMessageAsync(message.Chat.Id, "Я робот, я не могу им быть!", replyToMessageId: message.MessageId);
-                            }
-
-                            else if (msg.Contains("бля"))
-                            {
-                                await Bot.SendTextMessageAsync(message.Chat.Id, "Сам ты бля!", replyToMessageId: message.MessageId);
-                            }
-
-                            else if (msg.Contains("зовут"))
-                            {
-                                await Bot.SendTextMessageAsync(message.Chat.Id, "Я хлебушек!");
-                            }
-
                             else if (msg.Contains("дела"))
                             {
+                                // Генерируем рандомное значение переменной i, затем выводим ответ пользователю
                                 int i = rnd.Next(0, Words.mood.Length);
                                 await Bot.SendTextMessageAsync(message.Chat.Id, Words.mood[i], replyToMessageId: message.MessageId);
                             }
 
                             else if (msg.Contains("олбанский") || msg.Contains("олбанском"))
                             {
+                                // Генерируем рандомное значение переменной i, затем выводим ответ пользователю
                                 int i = rnd.Next(0, Words.olbanskyi.Length);
                                 await Bot.SendTextMessageAsync(message.Chat.Id, Words.olbanskyi[i], replyToMessageId: message.MessageId);
                             }
 
                             else if (message.Text == "/sendcat")
                             {
+                                // В этот массив будем помещать URL адреса из базы данных
                                 List<string> imageArr = new List<string>();
 
-                                using (CatImagesContext context = new CatImagesContext())
+                                // Если коллекция пустая - скачиваем данные с базы данных
+                                if (imageArr != null)
                                 {
-                                    var images = context.Images;
-                                    foreach(CatImages image in images)
+                                    using (CatImagesContext context = new CatImagesContext())
                                     {
-                                        if(image.ImageUrl != null)
-                                            imageArr.Add(image.ImageUrl);
+                                        var images = context.Images;
+                                        foreach (CatImages image in images)
+                                        {
+                                            if (image.ImageUrl != null)
+                                                imageArr.Add(image.ImageUrl);
+                                        }
                                     }
-
-                                    int i = rnd.Next(0, imageArr.Count);
-
-                                    Telegram.Bot.Types.FileToSend fileSend;
-                                    Uri cat = new Uri(imageArr[i]);
-                                    fileSend.Url = cat;
-
-                                    await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Мяу!");
                                 }
-                                
+
+                                // Отправляем пользователю рандомное изображение 
+                                int i = rnd.Next(0, imageArr.Count);
+
+                                Telegram.Bot.Types.FileToSend fileSend;
+                                Uri cat = new Uri(imageArr[i]);
+                                fileSend.Url = cat;
+
+                                await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Мяу!");
+
                             }
                             
                             else if(message.Text == "/wallpaper" || msg.Contains("обои") || msg.Contains("рабочий стол"))
                             {
+                                // В этот массив будем помещать URL адреса из базы данных
                                 List<string> imageArr = new List<string>();
 
-                                using (WallpapersContext context = new WallpapersContext())
+                                // Если коллекция пустая - то скачиваем данные с базы данных
+                                if (imageArr != null)
                                 {
-                                    var images = context.Images;
-
-                                    foreach(Wallpapers image in images)
+                                    using (WallpapersContext context = new WallpapersContext())
                                     {
-                                        if (image.ImageUrl != null)
-                                            imageArr.Add(image.ImageUrl);
+                                        var images = context.Images;
+
+                                        foreach (Wallpapers image in images)
+                                        {
+                                            if (image.ImageUrl != null)
+                                                imageArr.Add(image.ImageUrl);
+                                        }  
                                     }
-
-                                    int i = rnd.Next(0, imageArr.Count);
-
-                                    Telegram.Bot.Types.FileToSend fileSend;
-                                    Uri wallpaper = new Uri(imageArr[i]);
-                                    fileSend.Url = wallpaper;
-
-                                    await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
                                 }
+
+                                // Отправляем пользователю рандомное изображение 
+                                int i = rnd.Next(0, imageArr.Count);
+
+                                Telegram.Bot.Types.FileToSend fileSend;
+                                Uri wallpaper = new Uri(imageArr[i]);
+                                fileSend.Url = wallpaper;
+
+                                await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
                             }
 
                             else
                             {
-                                //int i = rnd.Next(0, Words.other.Length);
                                 await Bot.SendTextMessageAsync(message.Chat.Id, message.Text, replyToMessageId: message.MessageId);
+
+                                // Если не знаем ответа на входящую фразу - добавляем ее в rtbUndefined
                                 rtbUndefined.Invoke((MethodInvoker)delegate
                                 {
                                     rtbUndefined.Text += message.Text.ToString() + "\n";
                                 });
                             }
                         }
-                        else await Bot.SendTextMessageAsync(message.Chat.Id, "Многабукаф!!");
+                        else await Bot.SendTextMessageAsync(message.Chat.Id, "Многабукаф!!"); 
                     }
+                    #endregion
                 };
                 Bot.StartReceiving(); // Запуск приема обновлений 
             }
@@ -170,20 +173,20 @@ namespace TelegramBot
             {
                 rtbInput.Invoke((MethodInvoker)delegate
                 {
-                    rtbInput.Text += ex.Message.ToString();
+                    rtbInput.Text += ex.Message.ToString(); 
                 });
-            }
+            } 
         }
 
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            var text = textBox1.Text;
+            var key = textBox1.Text; // Токен бота
 
-            if (text != "" && this.bw.IsBusy != true)
+            if (key != "" && this.bw.IsBusy != true)
             {
                 rtbInput.Text += "Бот запущен!\n";
-                this.bw.RunWorkerAsync(text);
+                this.bw.RunWorkerAsync(key);
             }
         }
 

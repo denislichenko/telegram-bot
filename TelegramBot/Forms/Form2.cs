@@ -30,22 +30,14 @@ namespace TelegramBot
                         context.Images.Add(image);
                         context.SaveChanges();
 
-                        statusLabel.Text = "Статус: Отправлено успешно! | " + DateTime.Now.ToString();
-                        statusLabel.ForeColor = Color.Green;
-                        statusLabel.Visible = true;
+                        WriteStatus("Отправлено успешно!", Color.Green);
                     }
                     else
-                    {
-                        statusLabel.Text = "Статус: Поле ввода не может быть пустым! | " + DateTime.Now.ToString();
-                        statusLabel.ForeColor = Color.Red;
-                        statusLabel.Visible = true;
-                    }
+                        WriteStatus("Поле ввода не может быть пустым!", Color.Red);
                 }
                 catch(Exception ex)
                 {
-                    statusLabel.Text = "Статус: " + ex.Message;
-                    statusLabel.ForeColor = Color.Red;
-                    statusLabel.Visible = true;
+                    WriteStatus(ex.Message, Color.Red); 
                 }
             }
         }
@@ -62,24 +54,24 @@ namespace TelegramBot
                         context.Images.Add(image);
                         context.SaveChanges();
 
-                        statusLabel.Text = "Статус: Отправлено успешно! | " + DateTime.Now.ToString();
-                        statusLabel.ForeColor = Color.Green;
-                        statusLabel.Visible = true;
+                        WriteStatus("Отправлено успешно!", Color.Green);
                     }
                     else
-                    {
-                        statusLabel.Text = "Статус: Поле ввода не может быть пустым! | " + DateTime.Now.ToString();
-                        statusLabel.ForeColor = Color.Red;
-                        statusLabel.Visible = true;
-                    }
+                        WriteStatus("Поле ввода не может быть пустым!", Color.Red); 
                 }
                 catch (Exception ex)
                 {
-                    statusLabel.Text = "Статус: " + ex.Message;
-                    statusLabel.ForeColor = Color.Red;
-                    statusLabel.Visible = true;
+                    WriteStatus(ex.Message, Color.Red);
                 }
             }
         }
+
+        void WriteStatus(string message, Color color)
+        {
+            statusLabel.Text = "Статус: " + message + " | " + DateTime.Now.ToString();
+            statusLabel.ForeColor = color;
+            statusLabel.Visible = true;
+        }
+        
     }
 }
