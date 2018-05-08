@@ -28,120 +28,169 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.dBDataSet = new TelegramBot.DBDataSet();
+            this.catImagesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.catImagesTableAdapter = new TelegramBot.DBDataSetTableAdapters.CatImagesTableAdapter();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.statusLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.addNewWallpaper = new System.Windows.Forms.Button();
-            this.wallpaperUrlTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.addNewCat = new System.Windows.Forms.Button();
-            this.catUrlTextBox = new System.Windows.Forms.TextBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageUrlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dBDataSet1 = new TelegramBot.DBDataSet1();
+            this.wallpapersBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.wallpapersTableAdapter = new TelegramBot.DBDataSet1TableAdapters.WallpapersTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.catImagesBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wallpapersBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // dBDataSet
+            // 
+            this.dBDataSet.DataSetName = "DBDataSet";
+            this.dBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // catImagesBindingSource
+            // 
+            this.catImagesBindingSource.DataMember = "CatImages";
+            this.catImagesBindingSource.DataSource = this.dBDataSet;
+            // 
+            // catImagesTableAdapter
+            // 
+            this.catImagesTableAdapter.ClearBeforeFill = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.statusLabel);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.addNewWallpaper);
-            this.groupBox1.Controls.Add(this.wallpaperUrlTextBox);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.addNewCat);
-            this.groupBox1.Controls.Add(this.catUrlTextBox);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Controls.Add(this.dataGridView2);
+            this.groupBox1.Location = new System.Drawing.Point(1, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(776, 217);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.Size = new System.Drawing.Size(799, 272);
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Добавление нового объекта в Базу Данных";
+            this.groupBox1.Text = "CatImages Table";
             // 
-            // statusLabel
+            // dataGridView2
             // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.ForeColor = System.Drawing.Color.Black;
-            this.statusLabel.Location = new System.Drawing.Point(315, 179);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(74, 22);
-            this.statusLabel.TabIndex = 8;
-            this.statusLabel.Text = "Статус: ";
-            this.statusLabel.Visible = false;
+            this.dataGridView2.AutoGenerateColumns = false;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idDataGridViewTextBoxColumn,
+            this.imageUrlDataGridViewTextBoxColumn});
+            this.dataGridView2.DataSource = this.catImagesBindingSource;
+            this.dataGridView2.Location = new System.Drawing.Point(11, 37);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 24;
+            this.dataGridView2.Size = new System.Drawing.Size(776, 217);
+            this.dataGridView2.TabIndex = 2;
             // 
-            // label2
+            // idDataGridViewTextBoxColumn
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 112);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(307, 17);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Таблица Wallpapers | Введите URL картинки ";
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // addNewWallpaper
+            // imageUrlDataGridViewTextBoxColumn
             // 
-            this.addNewWallpaper.Location = new System.Drawing.Point(319, 135);
-            this.addNewWallpaper.Name = "addNewWallpaper";
-            this.addNewWallpaper.Size = new System.Drawing.Size(440, 28);
-            this.addNewWallpaper.TabIndex = 6;
-            this.addNewWallpaper.Text = "Добавить";
-            this.addNewWallpaper.UseVisualStyleBackColor = true;
-            this.addNewWallpaper.Click += new System.EventHandler(this.addNewWallpaper_Click);
+            this.imageUrlDataGridViewTextBoxColumn.DataPropertyName = "ImageUrl";
+            this.imageUrlDataGridViewTextBoxColumn.HeaderText = "ImageUrl";
+            this.imageUrlDataGridViewTextBoxColumn.Name = "imageUrlDataGridViewTextBoxColumn";
             // 
-            // wallpaperUrlTextBox
+            // groupBox2
             // 
-            this.wallpaperUrlTextBox.Location = new System.Drawing.Point(319, 107);
-            this.wallpaperUrlTextBox.Name = "wallpaperUrlTextBox";
-            this.wallpaperUrlTextBox.Size = new System.Drawing.Size(440, 22);
-            this.wallpaperUrlTextBox.TabIndex = 5;
+            this.groupBox2.Controls.Add(this.dataGridView1);
+            this.groupBox2.Location = new System.Drawing.Point(12, 290);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(799, 272);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Wallpapers table";
             // 
-            // label1
+            // dataGridView1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(264, 17);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Таблица Cats | Введите URL картинки ";
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridView1.DataSource = this.wallpapersBindingSource;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 39);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(776, 217);
+            this.dataGridView1.TabIndex = 2;
             // 
-            // addNewCat
+            // dataGridViewTextBoxColumn1
             // 
-            this.addNewCat.Location = new System.Drawing.Point(319, 58);
-            this.addNewCat.Name = "addNewCat";
-            this.addNewCat.Size = new System.Drawing.Size(440, 28);
-            this.addNewCat.TabIndex = 3;
-            this.addNewCat.Text = "Добавить";
-            this.addNewCat.UseVisualStyleBackColor = true;
-            this.addNewCat.Click += new System.EventHandler(this.addNewCat_Click);
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Id";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Id";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // catUrlTextBox
+            // dataGridViewTextBoxColumn2
             // 
-            this.catUrlTextBox.Location = new System.Drawing.Point(319, 30);
-            this.catUrlTextBox.Name = "catUrlTextBox";
-            this.catUrlTextBox.Size = new System.Drawing.Size(440, 22);
-            this.catUrlTextBox.TabIndex = 2;
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "ImageUrl";
+            this.dataGridViewTextBoxColumn2.HeaderText = "ImageUrl";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dBDataSet1
+            // 
+            this.dBDataSet1.DataSetName = "DBDataSet1";
+            this.dBDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // wallpapersBindingSource
+            // 
+            this.wallpapersBindingSource.DataMember = "Wallpapers";
+            this.wallpapersBindingSource.DataSource = this.dBDataSet1;
+            // 
+            // wallpapersTableAdapter
+            // 
+            this.wallpapersTableAdapter.ClearBeforeFill = true;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 241);
+            this.ClientSize = new System.Drawing.Size(816, 571);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form2";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.Form2_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.catImagesBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wallpapersBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
+        private DBDataSet dBDataSet;
+        private System.Windows.Forms.BindingSource catImagesBindingSource;
+        private DBDataSetTableAdapters.CatImagesTableAdapter catImagesTableAdapter;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button addNewWallpaper;
-        private System.Windows.Forms.TextBox wallpaperUrlTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button addNewCat;
-        private System.Windows.Forms.TextBox catUrlTextBox;
-        private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn imageUrlDataGridViewTextBoxColumn;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DBDataSet1 dBDataSet1;
+        private System.Windows.Forms.BindingSource wallpapersBindingSource;
+        private DBDataSet1TableAdapters.WallpapersTableAdapter wallpapersTableAdapter;
     }
 }
