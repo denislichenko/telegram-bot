@@ -66,16 +66,11 @@ namespace TelegramBot
 
                         if (msg.Length <= 100)
                         {
-                            if (msg.Contains("привет") || msg.Contains("ку") || msg.Contains("здарова"))
+                            if (message.Text == "/start")
                             {
-                                // Генерируем рандомное значение переменной i, затем выводим ответ пользователю
-                                int i = rnd.Next(0, Words.hello.Length); 
-                                await Bot.SendTextMessageAsync(message.Chat.Id, Words.hello[i], replyToMessageId: message.MessageId);
-                            }
-
-                            else if (message.Text == "/start")
-                            {
-                                await Bot.SendTextMessageAsync(message.Chat.Id, "Привет! :)", replyToMessageId: message.MessageId); // Описание действия 
+                                // Выводим в ответ случайное приветствие
+                                int i = rnd.Next(0, Words.start.Length);
+                                await Bot.SendTextMessageAsync(message.Chat.Id, Words.start[i], replyToMessageId: message.MessageId); // Описание действия 
                             }
 
                             else if (msg.Contains("дела"))

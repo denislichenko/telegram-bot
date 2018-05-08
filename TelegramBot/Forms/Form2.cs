@@ -17,16 +17,17 @@ namespace TelegramBot
         {
             InitializeComponent();
         }
-
+    
+        // Добавление новой записи в БД, в таблицу CatImages
         private void addNewCat_Click(object sender, EventArgs e)
         {
             using (CatImagesContext context = new CatImagesContext())
             {
                 try
                 {
-                    if (textBox1.Text != null)
+                    if (catUrlTextBox.Text != null)
                     {
-                        CatImages image = new CatImages() { ImageUrl = textBox1.Text };
+                        CatImages image = new CatImages() { ImageUrl = catUrlTextBox.Text };
                         context.Images.Add(image);
                         context.SaveChanges();
 
@@ -42,15 +43,16 @@ namespace TelegramBot
             }
         }
 
+        // Добавление новой записи в БД, в таблицу Wallpapers
         private void addNewWallpaper_Click(object sender, EventArgs e)
         {
             using (WallpapersContext context = new WallpapersContext())
             {
                 try
                 {
-                    if (textBox2.Text != null)
+                    if (wallpaperUrlTextBox.Text != null)
                     {
-                        Wallpapers image = new Wallpapers() { ImageUrl = textBox2.Text };
+                        Wallpapers image = new Wallpapers() { ImageUrl = wallpaperUrlTextBox.Text };
                         context.Images.Add(image);
                         context.SaveChanges();
 

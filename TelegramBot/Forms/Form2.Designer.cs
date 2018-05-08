@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.statusLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.addNewWallpaper = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.wallpaperUrlTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.addNewCat = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.statusLabel = new System.Windows.Forms.Label();
+            this.catUrlTextBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,16 +44,28 @@
             this.groupBox1.Controls.Add(this.statusLabel);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.addNewWallpaper);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.wallpaperUrlTextBox);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.addNewCat);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.catUrlTextBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(776, 217);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Добавление нового объекта в Базу Данных";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel.ForeColor = System.Drawing.Color.Black;
+            this.statusLabel.Location = new System.Drawing.Point(315, 179);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(74, 22);
+            this.statusLabel.TabIndex = 8;
+            this.statusLabel.Text = "Статус: ";
+            this.statusLabel.Visible = false;
             // 
             // label2
             // 
@@ -74,12 +86,12 @@
             this.addNewWallpaper.UseVisualStyleBackColor = true;
             this.addNewWallpaper.Click += new System.EventHandler(this.addNewWallpaper_Click);
             // 
-            // textBox2
+            // wallpaperUrlTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(319, 107);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(440, 22);
-            this.textBox2.TabIndex = 5;
+            this.wallpaperUrlTextBox.Location = new System.Drawing.Point(319, 107);
+            this.wallpaperUrlTextBox.Name = "wallpaperUrlTextBox";
+            this.wallpaperUrlTextBox.Size = new System.Drawing.Size(440, 22);
+            this.wallpaperUrlTextBox.TabIndex = 5;
             // 
             // label1
             // 
@@ -100,24 +112,12 @@
             this.addNewCat.UseVisualStyleBackColor = true;
             this.addNewCat.Click += new System.EventHandler(this.addNewCat_Click);
             // 
-            // textBox1
+            // catUrlTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(319, 30);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(440, 22);
-            this.textBox1.TabIndex = 2;
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.ForeColor = System.Drawing.Color.Black;
-            this.statusLabel.Location = new System.Drawing.Point(315, 179);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(74, 22);
-            this.statusLabel.TabIndex = 8;
-            this.statusLabel.Text = "Статус: ";
-            this.statusLabel.Visible = false;
+            this.catUrlTextBox.Location = new System.Drawing.Point(319, 30);
+            this.catUrlTextBox.Name = "catUrlTextBox";
+            this.catUrlTextBox.Size = new System.Drawing.Size(440, 22);
+            this.catUrlTextBox.TabIndex = 2;
             // 
             // Form2
             // 
@@ -138,10 +138,10 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button addNewWallpaper;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox wallpaperUrlTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button addNewCat;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox catUrlTextBox;
         private System.Windows.Forms.Label statusLabel;
     }
 }
