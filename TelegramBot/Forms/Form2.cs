@@ -2,12 +2,13 @@
 using System.Drawing;
 using System.Windows.Forms;
 using TelegramBot.Models;
+using MetroFramework.Forms; 
 
 namespace TelegramBot
 {
-    public partial class Form2 : Form
+    public partial class DataBaseForm : MetroForm
     {
-        public Form2()
+        public DataBaseForm()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace TelegramBot
 {
-    partial class Form2
+    partial class DataBaseForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataBaseForm));
             this.dBDataSet = new TelegramBot.DBDataSet();
             this.catImagesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.catImagesTableAdapter = new TelegramBot.DBDataSetTableAdapters.CatImagesTableAdapter();
@@ -40,8 +41,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dBDataSet1 = new TelegramBot.DBDataSet1();
             this.wallpapersBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dBDataSet1 = new TelegramBot.DBDataSet1();
             this.wallpapersTableAdapter = new TelegramBot.DBDataSet1TableAdapters.WallpapersTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.catImagesBindingSource)).BeginInit();
@@ -49,8 +50,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wallpapersBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet1)).BeginInit();
             this.SuspendLayout();
             // 
             // dBDataSet
@@ -70,9 +71,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dataGridView2);
-            this.groupBox1.Location = new System.Drawing.Point(1, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 58);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(799, 272);
+            this.groupBox1.Size = new System.Drawing.Size(788, 272);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "CatImages Table";
@@ -107,9 +108,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dataGridView1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 290);
+            this.groupBox2.Location = new System.Drawing.Point(12, 336);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(799, 272);
+            this.groupBox2.Size = new System.Drawing.Size(788, 272);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Wallpapers table";
@@ -141,29 +142,30 @@
             this.dataGridViewTextBoxColumn2.HeaderText = "ImageUrl";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             // 
-            // dBDataSet1
-            // 
-            this.dBDataSet1.DataSetName = "DBDataSet1";
-            this.dBDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // wallpapersBindingSource
             // 
             this.wallpapersBindingSource.DataMember = "Wallpapers";
             this.wallpapersBindingSource.DataSource = this.dBDataSet1;
             // 
+            // dBDataSet1
+            // 
+            this.dBDataSet1.DataSetName = "DBDataSet1";
+            this.dBDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // wallpapersTableAdapter
             // 
             this.wallpapersTableAdapter.ClearBeforeFill = true;
             // 
-            // Form2
+            // DataBaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(816, 571);
+            this.ClientSize = new System.Drawing.Size(816, 627);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Form2";
-            this.Text = "Form2";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "DataBaseForm";
+            this.Text = "DataBase";
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.catImagesBindingSource)).EndInit();
@@ -171,8 +173,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wallpapersBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dBDataSet1)).EndInit();
             this.ResumeLayout(false);
 
         }

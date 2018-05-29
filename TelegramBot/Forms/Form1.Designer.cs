@@ -1,6 +1,6 @@
 ﻿namespace TelegramBot
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnStart = new System.Windows.Forms.Button();
@@ -42,7 +43,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(8, 21);
+            this.label1.Location = new System.Drawing.Point(23, 76);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(212, 16);
             this.label1.TabIndex = 0;
@@ -50,7 +51,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(234, 15);
+            this.textBox1.Location = new System.Drawing.Point(253, 70);
             this.textBox1.Name = "textBox1";
             this.textBox1.PasswordChar = '•';
             this.textBox1.Size = new System.Drawing.Size(637, 22);
@@ -59,7 +60,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(234, 43);
+            this.btnStart.Location = new System.Drawing.Point(253, 98);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(637, 28);
             this.btnStart.TabIndex = 2;
@@ -69,7 +70,7 @@
             // 
             // rtbInput
             // 
-            this.rtbInput.Location = new System.Drawing.Point(11, 107);
+            this.rtbInput.Location = new System.Drawing.Point(26, 166);
             this.rtbInput.Name = "rtbInput";
             this.rtbInput.Size = new System.Drawing.Size(418, 262);
             this.rtbInput.TabIndex = 3;
@@ -77,7 +78,7 @@
             // 
             // rtbUndefined
             // 
-            this.rtbUndefined.Location = new System.Drawing.Point(435, 107);
+            this.rtbUndefined.Location = new System.Drawing.Point(472, 166);
             this.rtbUndefined.Name = "rtbUndefined";
             this.rtbUndefined.Size = new System.Drawing.Size(418, 262);
             this.rtbUndefined.TabIndex = 4;
@@ -86,7 +87,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 87);
+            this.label2.Location = new System.Drawing.Point(24, 146);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 17);
             this.label2.TabIndex = 5;
@@ -95,7 +96,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(435, 87);
+            this.label3.Location = new System.Drawing.Point(469, 146);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(121, 17);
             this.label3.TabIndex = 6;
@@ -103,19 +104,19 @@
             // 
             // btnForm2
             // 
-            this.btnForm2.Location = new System.Drawing.Point(12, 379);
+            this.btnForm2.Location = new System.Drawing.Point(26, 434);
             this.btnForm2.Name = "btnForm2";
             this.btnForm2.Size = new System.Drawing.Size(418, 28);
             this.btnForm2.TabIndex = 7;
-            this.btnForm2.Text = "База данных";
+            this.btnForm2.Text = "DataBase";
             this.btnForm2.UseVisualStyleBackColor = true;
             this.btnForm2.Click += new System.EventHandler(this.btnForm2_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(883, 419);
+            this.ClientSize = new System.Drawing.Size(913, 476);
             this.Controls.Add(this.btnForm2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -124,8 +125,9 @@
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "MainForm";
+            this.Text = "Main Form";
             this.ResumeLayout(false);
             this.PerformLayout();
 

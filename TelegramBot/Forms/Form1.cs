@@ -6,14 +6,15 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TelegramBot.Models;
+using MetroFramework.Forms; 
 
 namespace TelegramBot
 {
-    public partial class Form1 : Form
+    public partial class MainForm : MetroForm
     {
         BackgroundWorker bw;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -113,7 +114,7 @@ namespace TelegramBot
 
                             }
                             
-                            else if (msg.IsOneOf("/wallpaper", "обои", "рабочий стол")
+                            else if (msg.IsOneOf("/wallpaper", "обои", "рабочий стол"))
                             {
                                 // В этот массив будем помещать URL адреса из базы данных
                                 List<string> imageArr = new List<string>();
@@ -182,7 +183,7 @@ namespace TelegramBot
 
         private void btnForm2_Click(object sender, EventArgs e)
         {
-            Form2 form = new Form2();
+            DataBaseForm form = new DataBaseForm();
             form.Show();
         }
     }
