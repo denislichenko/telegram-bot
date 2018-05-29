@@ -43,7 +43,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 76);
+            this.label1.Location = new System.Drawing.Point(24, 76);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(212, 16);
             this.label1.TabIndex = 0;
@@ -51,18 +51,18 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(253, 70);
+            this.textBox1.Location = new System.Drawing.Point(288, 70);
             this.textBox1.Name = "textBox1";
             this.textBox1.PasswordChar = '•';
-            this.textBox1.Size = new System.Drawing.Size(637, 22);
+            this.textBox1.Size = new System.Drawing.Size(602, 22);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "557031482:AAG3CzsLcDPb46akVM_0-KsX_J5C1oY53n8";
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(253, 98);
+            this.btnStart.Location = new System.Drawing.Point(288, 98);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(637, 28);
+            this.btnStart.Size = new System.Drawing.Size(602, 28);
             this.btnStart.TabIndex = 2;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
