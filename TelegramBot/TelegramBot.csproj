@@ -89,6 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBDataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 using TelegramBot.Models;
 
@@ -68,21 +69,21 @@ namespace TelegramBot
                                 await Bot.SendTextMessageAsync(message.Chat.Id, Words.start[i], replyToMessageId: message.MessageId); // Описание действия 
                             }
 
-                            else if (msg.Contains("дела"))
+                            else if (msg.IsOneOf("дела"))
                             {
                                 // Генерируем рандомное значение переменной i, затем выводим ответ пользователю
                                 int i = rnd.Next(0, Words.mood.Length);
                                 await Bot.SendTextMessageAsync(message.Chat.Id, Words.mood[i], replyToMessageId: message.MessageId);
                             }
 
-                            else if (msg.Contains("олбанский") || msg.Contains("олбанском"))
+                            else if (msg.IsOneOf("олбанский", "олбанском"))
                             {
                                 // Генерируем рандомное значение переменной i, затем выводим ответ пользователю
                                 int i = rnd.Next(0, Words.olbanskyi.Length);
                                 await Bot.SendTextMessageAsync(message.Chat.Id, Words.olbanskyi[i], replyToMessageId: message.MessageId);
                             }
 
-                            else if (message.Text == "/sendcat")
+                            else if (msg.IsOneOf("/sendcat", "мяу"))
                             {
                                 // В этот массив будем помещать URL адреса из базы данных
                                 List<string> imageArr = new List<string>();
@@ -112,7 +113,7 @@ namespace TelegramBot
 
                             }
                             
-                            else if (message.Text == "/wallpaper" || msg.Contains("обои") || msg.Contains("рабочий стол"))
+                            else if (msg.IsOneOf("/wallpaper", "обои", "рабочий стол")
                             {
                                 // В этот массив будем помещать URL адреса из базы данных
                                 List<string> imageArr = new List<string>();

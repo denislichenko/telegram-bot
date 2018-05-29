@@ -41,15 +41,16 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(8, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(202, 17);
+            this.label1.Size = new System.Drawing.Size(212, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Token to access the HTTP API";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(220, 4);
+            this.textBox1.Location = new System.Drawing.Point(234, 15);
             this.textBox1.Name = "textBox1";
             this.textBox1.PasswordChar = '•';
             this.textBox1.Size = new System.Drawing.Size(637, 22);
@@ -58,7 +59,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(220, 32);
+            this.btnStart.Location = new System.Drawing.Point(234, 43);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(637, 28);
             this.btnStart.TabIndex = 2;
@@ -68,7 +69,7 @@
             // 
             // rtbInput
             // 
-            this.rtbInput.Location = new System.Drawing.Point(15, 86);
+            this.rtbInput.Location = new System.Drawing.Point(11, 107);
             this.rtbInput.Name = "rtbInput";
             this.rtbInput.Size = new System.Drawing.Size(418, 262);
             this.rtbInput.TabIndex = 3;
@@ -76,7 +77,7 @@
             // 
             // rtbUndefined
             // 
-            this.rtbUndefined.Location = new System.Drawing.Point(439, 86);
+            this.rtbUndefined.Location = new System.Drawing.Point(435, 107);
             this.rtbUndefined.Name = "rtbUndefined";
             this.rtbUndefined.Size = new System.Drawing.Size(418, 262);
             this.rtbUndefined.TabIndex = 4;
@@ -85,7 +86,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 66);
+            this.label2.Location = new System.Drawing.Point(8, 87);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 17);
             this.label2.TabIndex = 5;
@@ -94,7 +95,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(439, 66);
+            this.label3.Location = new System.Drawing.Point(435, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(121, 17);
             this.label3.TabIndex = 6;
@@ -102,7 +103,7 @@
             // 
             // btnForm2
             // 
-            this.btnForm2.Location = new System.Drawing.Point(15, 366);
+            this.btnForm2.Location = new System.Drawing.Point(12, 379);
             this.btnForm2.Name = "btnForm2";
             this.btnForm2.Size = new System.Drawing.Size(418, 28);
             this.btnForm2.TabIndex = 7;
@@ -114,7 +115,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 419);
+            this.ClientSize = new System.Drawing.Size(883, 419);
             this.Controls.Add(this.btnForm2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
