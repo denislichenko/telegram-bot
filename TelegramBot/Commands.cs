@@ -19,7 +19,7 @@ namespace TelegramBot
         public static MessageContext context = new MessageContext();
         private static Random rnd = new Random(); 
 
-        public static List<string> DownloadCats(ImageType type)
+        public static List<string> DownloadImages(ImageType type)
         {
             List<string> imageArr = new List<string>();
 
@@ -51,6 +51,21 @@ namespace TelegramBot
             }
 
             return imageArr;
+        }
+
+        public static async void CreateMessage(string income, string reply)
+        {
+            using (MessageContext context = new MessageContext())
+            {
+                MessageModel model = new MessageModel
+                {
+                    IncomeMessage = income,
+                    ReplyMessage = reply
+                };
+
+                context.Messanges.Add(model);
+                await context.SaveChangesAsync(); 
+            }
         }
     }
 }

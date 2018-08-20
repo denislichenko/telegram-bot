@@ -18,9 +18,10 @@ namespace TelegramBot
     {
         BackgroundWorker bw;
         public static Telegram.Bot.TelegramBotClient Bot;
-        public List<string> CatImages = Commands.DownloadCats(ImageType.Cat);
-        public List<string> WallpaperImages = Commands.DownloadCats(ImageType.Wallpaper);
+        public List<string> CatImages = Commands.DownloadImages(ImageType.Cat);
+        public List<string> WallpaperImages = Commands.DownloadImages(ImageType.Wallpaper);
         public MessageContext messageContext = new MessageContext();
+        public string[] blackList = { "0" }; 
         public MainForm()
         {
             InitializeComponent();
@@ -32,7 +33,7 @@ namespace TelegramBot
         public async void bw_DoWorkAsync(object sender, DoWorkEventArgs e)
         {
             var key = e.Argument as String;
-            Bot = new Telegram.Bot.TelegramBotClient("");
+            Bot = new Telegram.Bot.TelegramBotClient("557031482:AAH--c8jZKgREyK9rZ0RgUI2ccw8-wIS2ow");
             Bot.OnMessage += OnMessageReceived;
             Bot.OnMessageEdited += OnMessageReceived;
             Bot.OnCallbackQuery += OnCallBackQueryReceived;
@@ -80,9 +81,12 @@ namespace TelegramBot
 
             if (message == null || message.Type != Telegram.Bot.Types.Enums.MessageType.TextMessage) return;
 
-            //rtbInput.Text += $"MSG ID: {message.MessageId} | MSG Text: {message.Text.ToString()} | CHAT ID: {message.From.Id.ToString()} \n";
+            rtbInput.Invoke((MethodInvoker)delegate
+            {
+                rtbInput.Text += $"MSG ID: {message.MessageId} | MSG Text: {message.Text.ToString()} | CHAT ID: {message.From.Id.ToString()} \n";
+            });
 
-            switch (message.Text.Split(' ').First().ToLower())
+            switch (message.Text.ToLower())
             {
                 case "/start":
                     i = rnd.Next(0, Words.start.Length);
@@ -104,21 +108,52 @@ namespace TelegramBot
                     await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
                     break;
                 default:
-                    var messanges = messageContext.Messanges;
-                    var answer = messanges.Where(x => x.IncomeMessage == message.Text.ToLower()).ToList(); 
-                    
-                    if(answer.Count != 0)
+
+                    if (message.Text.Contains(">"))
                     {
-                        if(answer.Count > 1)
+                        foreach(string userId in blackList)
+                        {
+                            if(message.Chat.Id.ToString() == userId)
+                            {
+                                await Bot.SendTextMessageAsync(message.Chat.Id, $"You were deprived of this royal opportunity! :((", replyToMessageId: message.MessageId);
+                                break; 
+                            }
+
+                            string incomeMessage = message.Text.Substring(0, message.Text.IndexOf(">")).Trim().ToLower();
+                            string replyMessage = message.Text.Substring(message.Text.IndexOf(">") + 1).Trim();
+
+                            rtbInput.Invoke((MethodInvoker)delegate
+                            {
+                                rtbInput.Text += $"\nCreated new message: {incomeMessage} | {replyMessage}\n" +
+                                                 $"User Id: {message.Chat.Id}\n";
+                            });
+
+                            Commands.CreateMessage(incomeMessage, replyMessage);
+
+                            await Bot.SendTextMessageAsync(message.Chat.Id, $"Add message: {incomeMessage} | {replyMessage}", replyToMessageId: message.MessageId);
+                            break;
+                        }
+                        
+                    }
+
+                    var messanges = messageContext.Messanges;
+                    var answer = messanges.Where(x => x.IncomeMessage == message.Text.ToLower()).ToList();
+
+                    if (answer.Count != 0)
+                    {
+                        if (answer.Count > 1)
                         {
                             i = rnd.Next(0, answer.Count);
                             await Bot.SendTextMessageAsync(message.Chat.Id, answer[i].ReplyMessage, replyToMessageId: message.MessageId);
-                            break; 
+                            break;
                         }
 
-                        await Bot.SendTextMessageAsync(message.Chat.Id, answer[0].ReplyMessage, replyToMessageId: message.MessageId); 
+                        await Bot.SendTextMessageAsync(message.Chat.Id, answer[0].ReplyMessage, replyToMessageId: message.MessageId);
+                        break;
                     }
-
+                    else
+                        await Bot.SendTextMessageAsync(message.Chat.Id, "Unknown command", replyToMessageId: message.MessageId);
+                    
                     break; 
 
             }
@@ -126,12 +161,12 @@ namespace TelegramBot
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            var key = ""; // Токен бота
+            var key = "557031482: AAH--c8jZKgREyK9rZ0RgUI2ccw8 - wIS2ow"; // Токен бота
 
             if (key != "" && this.bw.IsBusy != true)
             {
                 rtbInput.Text += "Бот запущен!\n";
-                this.bw.RunWorkerAsync("");
+                this.bw.RunWorkerAsync("557031482: AAH--c8jZKgREyK9rZ0RgUI2ccw8 - wIS2ow");
             }
         }
 
