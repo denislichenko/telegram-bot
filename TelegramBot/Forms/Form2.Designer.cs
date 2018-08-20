@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataBaseForm));
-            this.dBDataSet = new TelegramBot.DBDataSet();
+            this.dBDataSet = new TelegramBot.App_Data.DataSets.DBDataSet();
             this.catImagesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.catImagesTableAdapter = new TelegramBot.DBDataSetTableAdapters.CatImagesTableAdapter();
+            this.catImagesTableAdapter = new TelegramBot.App_Data.DataSets.DBDataSetTableAdapters.CatImagesTableAdapter();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,8 +42,8 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.wallpapersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dBDataSet1 = new TelegramBot.DBDataSet1();
-            this.wallpapersTableAdapter = new TelegramBot.DBDataSet1TableAdapters.WallpapersTableAdapter();
+            this.dBDataSet1 = new TelegramBot.App_Data.DataSets.DBDataSet1();
+            this.wallpapersTableAdapter = new TelegramBot.App_Data.DataSets.DBDataSet1TableAdapters.WallpapersTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.catImagesBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -180,9 +180,9 @@
         }
 
         #endregion
-        private DBDataSet dBDataSet;
+        private App_Data.DataSets.DBDataSet dBDataSet;
         private System.Windows.Forms.BindingSource catImagesBindingSource;
-        private DBDataSetTableAdapters.CatImagesTableAdapter catImagesTableAdapter;
+        private App_Data.DataSets.DBDataSetTableAdapters.CatImagesTableAdapter catImagesTableAdapter;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
@@ -191,8 +191,8 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DBDataSet1 dBDataSet1;
+        private App_Data.DataSets.DBDataSet1 dBDataSet1;
         private System.Windows.Forms.BindingSource wallpapersBindingSource;
-        private DBDataSet1TableAdapters.WallpapersTableAdapter wallpapersTableAdapter;
+        private App_Data.DataSets.DBDataSet1TableAdapters.WallpapersTableAdapter wallpapersTableAdapter;
     }
 }

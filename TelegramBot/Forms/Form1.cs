@@ -6,14 +6,21 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using TelegramBot.Models;
-using MetroFramework.Forms; 
+using MetroFramework.Forms;
+using TelegramBot.Forms;
+using Telegram.Bot.Args;
+using System.Linq;
+using Telegram.Bot.Types.Enums;
 
 namespace TelegramBot
 {
     public partial class MainForm : MetroForm
     {
         BackgroundWorker bw;
-
+        public static Telegram.Bot.TelegramBotClient Bot;
+        public List<string> CatImages = Commands.DownloadCats(ImageType.Cat);
+        public List<string> WallpaperImages = Commands.DownloadCats(ImageType.Wallpaper);
+        public MessageContext messageContext = new MessageContext();
         public MainForm()
         {
             InitializeComponent();
@@ -24,166 +31,119 @@ namespace TelegramBot
 
         public async void bw_DoWorkAsync(object sender, DoWorkEventArgs e)
         {
-            var worker = sender as BackgroundWorker;
             var key = e.Argument as String;
-       
-            try
-            {
-                var Bot = new Telegram.Bot.TelegramBotClient(key); // Инициализируем
-                await Bot.SetWebhookAsync(""); // Убираем старую привязку к WebHook
-                Random rnd = new Random();
+            Bot = new Telegram.Bot.TelegramBotClient("");
+            Bot.OnMessage += OnMessageReceived;
+            Bot.OnMessageEdited += OnMessageReceived;
+            Bot.OnCallbackQuery += OnCallBackQueryReceived;
+            Bot.OnInlineQuery += OnInlineQueryReceived;
+            Bot.OnInlineResultChosen += OnInlineResultChosenReveived;
+            Bot.OnReceiveError += OnReceiveError;
+                 
+            Bot.StartReceiving(Array.Empty<UpdateType>());
+        }
 
-                Bot.OnUpdate += async (object su, Telegram.Bot.Args.UpdateEventArgs updates) =>
-                {
-                    if (updates.Update.CallbackQuery != null || updates.Update.InlineQuery != null) return;
-                    var update = updates.Update;
-                    var message = update.Message;
-                    if (message == null) return;
+        private void OnReceiveError(object sender, ReceiveErrorEventArgs e)
+        {
+            rtbInput.Text += string.Format("Received error: {0} - {1}",
+                e.ApiRequestException.ErrorCode,
+                e.ApiRequestException.Message);
+        }
+
+        private void OnInlineResultChosenReveived(object sender, ChosenInlineResultEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnInlineQueryReceived(object sender, InlineQueryEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static async void OnCallBackQueryReceived(object sender, CallbackQueryEventArgs e)
+        {
+            var callbackQuery = e.CallbackQuery;
+            await Bot.AnswerCallbackQueryAsync(
+                callbackQuery.Id,
+                $"Received {callbackQuery.Data}");
+            await Bot.SendTextMessageAsync(
+                callbackQuery.Message.Chat.Id,
+                $"Received {callbackQuery.Data}");
+        }
+
+        private async void OnMessageReceived(object sender, MessageEventArgs e)
+        {
+            var message = e.Message;
+            Random rnd = new Random();
+            int i;
+            Telegram.Bot.Types.FileToSend fileSend;
+
+            if (message == null || message.Type != Telegram.Bot.Types.Enums.MessageType.TextMessage) return;
+
+            //rtbInput.Text += $"MSG ID: {message.MessageId} | MSG Text: {message.Text.ToString()} | CHAT ID: {message.From.Id.ToString()} \n";
+
+            switch (message.Text.Split(' ').First().ToLower())
+            {
+                case "/start":
+                    i = rnd.Next(0, Words.start.Length);
+                    await Bot.SendTextMessageAsync(message.Chat.Id, Words.start[i], replyToMessageId: message.MessageId);
+                    break;
+                case "/sendcat":
+                    i = rnd.Next(0, CatImages.Count);
+                    Uri cat = new Uri(CatImages[i]);
+                    fileSend.Url = cat;
+                    await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Meow!");
+                    break;
+                case "/wallpaper":
+                    // Отправляем пользователю рандомное изображение 
+                    i = rnd.Next(0, WallpaperImages.Count);
+
+                    Uri wallpaper = new Uri(WallpaperImages[i]);
+                    fileSend.Url = wallpaper;
+
+                    await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
+                    break;
+                default:
+                    var messanges = messageContext.Messanges;
+                    var answer = messanges.Where(x => x.IncomeMessage == message.Text.ToLower()).ToList(); 
                     
-                    rtbInput.Invoke((MethodInvoker)delegate
+                    if(answer.Count != 0)
                     {
-                        try
+                        if(answer.Count > 1)
                         {
-                            rtbInput.Text += "MSG ID: " + message.MessageId.ToString()
-                            + " | MSG Text: " + message.Text.ToString()
-                            + " | CHAT ID: " + message.From.Id.ToString() + "\n";
+                            i = rnd.Next(0, answer.Count);
+                            await Bot.SendTextMessageAsync(message.Chat.Id, answer[i].ReplyMessage, replyToMessageId: message.MessageId);
+                            break; 
                         }
-                        catch { }
-                    });
 
-                    #region Команды бота
-                    if (message.Type == Telegram.Bot.Types.Enums.MessageType.TextMessage)
-                    {
-                        var msg = message.Text.ToLower(); // Переводим входящее сообщение в нижний регистр
-
-                        /* 
-                           Если длина сообщения меньше или равно 100, то соответствующее сообщение, 
-                           иначе выводим сообщение о превышении длины. 
-                        */
-
-                        if (msg.Length <= 100)
-                        {
-                            if (message.Text == "/start")
-                            {
-                                // Выводим в ответ случайное приветствие
-                                int i = rnd.Next(0, Words.start.Length);
-                                await Bot.SendTextMessageAsync(message.Chat.Id, Words.start[i], replyToMessageId: message.MessageId); // Описание действия 
-                            }
-
-                            else if (msg.IsOneOf("дела"))
-                            {
-                                // Генерируем рандомное значение переменной i, затем выводим ответ пользователю
-                                int i = rnd.Next(0, Words.mood.Length);
-                                await Bot.SendTextMessageAsync(message.Chat.Id, Words.mood[i], replyToMessageId: message.MessageId);
-                            }
-
-                            else if (msg.IsOneOf("олбанский", "олбанском"))
-                            {
-                                // Генерируем рандомное значение переменной i, затем выводим ответ пользователю
-                                int i = rnd.Next(0, Words.olbanskyi.Length);
-                                await Bot.SendTextMessageAsync(message.Chat.Id, Words.olbanskyi[i], replyToMessageId: message.MessageId);
-                            }
-
-                            else if (msg.IsOneOf("/sendcat", "мяу"))
-                            {
-                                // В этот массив будем помещать URL адреса из базы данных
-                                List<string> imageArr = new List<string>();
-
-                                // Если коллекция пустая - скачиваем данные с базы данных
-                                if (imageArr != null)
-                                {
-                                    using (CatImagesContext context = new CatImagesContext())
-                                    {
-                                        var images = context.Images;
-                                        foreach (CatImages image in images)
-                                        {
-                                            if (image.ImageUrl != null)
-                                                imageArr.Add(image.ImageUrl);
-                                        }
-                                    }
-                                }
-
-                                // Отправляем пользователю рандомное изображение 
-                                int i = rnd.Next(0, imageArr.Count);
-
-                                Telegram.Bot.Types.FileToSend fileSend;
-                                Uri cat = new Uri(imageArr[i]);
-                                fileSend.Url = cat;
-
-                                await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Мяу!");
-
-                            }
-                            
-                            else if (msg.IsOneOf("/wallpaper", "обои", "рабочий стол"))
-                            {
-                                // В этот массив будем помещать URL адреса из базы данных
-                                List<string> imageArr = new List<string>();
-
-                                // Если коллекция пустая - то скачиваем данные с базы данных
-                                if (imageArr != null)
-                                {
-                                    using (WallpapersContext context = new WallpapersContext())
-                                    {
-                                        var images = context.Images;
-
-                                        foreach (Wallpapers image in images)
-                                        {
-                                            if (image.ImageUrl != null)
-                                                imageArr.Add(image.ImageUrl);
-                                        }  
-                                    }
-                                }
-
-                                // Отправляем пользователю рандомное изображение 
-                                int i = rnd.Next(0, imageArr.Count);
-
-                                Telegram.Bot.Types.FileToSend fileSend;
-                                Uri wallpaper = new Uri(imageArr[i]);
-                                fileSend.Url = wallpaper;
-
-                                await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
-                            }
-
-                            else
-                            {
-                                await Bot.SendTextMessageAsync(message.Chat.Id, message.Text, replyToMessageId: message.MessageId);
-
-                                // Если не знаем ответа на входящую фразу - добавляем ее в rtbUndefined
-                                rtbUndefined.Invoke((MethodInvoker)delegate
-                                {
-                                    rtbUndefined.Text += message.Text.ToString() + "\n";
-                                });
-                            }
-                        }
-                        else await Bot.SendTextMessageAsync(message.Chat.Id, "Многабукаф!!"); 
+                        await Bot.SendTextMessageAsync(message.Chat.Id, answer[0].ReplyMessage, replyToMessageId: message.MessageId); 
                     }
-                    #endregion
-                };
-                Bot.StartReceiving(); // Запуск приема обновлений 
+
+                    break; 
+
             }
-            catch (Telegram.Bot.Exceptions.ApiRequestException ex) 
-            {
-                rtbInput.Invoke((MethodInvoker)delegate
-                {
-                    rtbInput.Text += ex.Message.ToString(); 
-                });
-            } 
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            var key = textBox1.Text; // Токен бота
+            var key = ""; // Токен бота
 
             if (key != "" && this.bw.IsBusy != true)
             {
                 rtbInput.Text += "Бот запущен!\n";
-                this.bw.RunWorkerAsync(key);
+                this.bw.RunWorkerAsync("");
             }
         }
 
         private void btnForm2_Click(object sender, EventArgs e)
         {
             DataBaseForm form = new DataBaseForm();
+            form.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageForm form = new MessageForm();
             form.Show();
         }
     }
