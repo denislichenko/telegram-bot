@@ -86,77 +86,82 @@ namespace TelegramBot
                 rtbInput.Text += $"MSG ID: {message.MessageId} | MSG Text: {message.Text.ToString()} | CHAT ID: {message.From.Id.ToString()} \n";
             });
 
-            switch (message.Text.ToLower())
+            try
             {
-                case "/start":
-                    i = rnd.Next(0, Words.start.Length);
-                    await Bot.SendTextMessageAsync(message.Chat.Id, Words.start[i], replyToMessageId: message.MessageId);
-                    break;
-                case "/sendcat":
-                    i = rnd.Next(0, CatImages.Count);
-                    Uri cat = new Uri(CatImages[i]);
-                    fileSend.Url = cat;
-                    await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Meow!");
-                    break;
-                case "/wallpaper":
-                    // Отправляем пользователю рандомное изображение 
-                    i = rnd.Next(0, WallpaperImages.Count);
+                switch (message.Text.ToLower())
+                {
+                    case "/start":
+                        i = rnd.Next(0, Words.start.Length);
+                        await Bot.SendTextMessageAsync(message.Chat.Id, Words.start[i], replyToMessageId: message.MessageId);
+                        break;
+                    case "/sendcat":
+                        i = rnd.Next(0, CatImages.Count);
+                        Uri cat = new Uri(CatImages[i]);
+                        fileSend.Url = cat;
+                        await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Meow!");
+                        break;
+                    case "/wallpaper":
+                        // Отправляем пользователю рандомное изображение 
+                        i = rnd.Next(0, WallpaperImages.Count);
 
-                    Uri wallpaper = new Uri(WallpaperImages[i]);
-                    fileSend.Url = wallpaper;
+                        Uri wallpaper = new Uri(WallpaperImages[i]);
+                        fileSend.Url = wallpaper;
 
-                    await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
-                    break;
-                default:
+                        await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
+                        break;
+                    default:
 
-                    if (message.Text.Contains(">"))
-                    {
-                        foreach(string userId in blackList)
+                        if (message.Text.Contains(">"))
                         {
-                            if(message.Chat.Id.ToString() == userId)
+                            foreach (string userId in blackList)
                             {
-                                await Bot.SendTextMessageAsync(message.Chat.Id, $"You were deprived of this royal opportunity! :((", replyToMessageId: message.MessageId);
-                                break; 
+                                if (message.Chat.Id.ToString() == userId)
+                                {
+                                    await Bot.SendTextMessageAsync(message.Chat.Id, $"You were deprived of this royal opportunity! :((", replyToMessageId: message.MessageId);
+                                    break;
+                                }
+
+                                string incomeMessage = message.Text.Substring(0, message.Text.IndexOf(">")).Trim().ToLower();
+                                string replyMessage = message.Text.Substring(message.Text.IndexOf(">") + 1).Trim();
+
+                                rtbInput.Invoke((MethodInvoker)delegate
+                                {
+                                    rtbInput.Text += $"\nCreated new message: {incomeMessage} | {replyMessage}\n" +
+                                                     $"User Id: {message.Chat.Id}\n";
+                                });
+
+                                Commands.CreateMessage(incomeMessage, replyMessage);
+
+                                await Bot.SendTextMessageAsync(message.Chat.Id, $"Add message: {incomeMessage} | {replyMessage}", replyToMessageId: message.MessageId);
+                                break;
                             }
 
-                            string incomeMessage = message.Text.Substring(0, message.Text.IndexOf(">")).Trim().ToLower();
-                            string replyMessage = message.Text.Substring(message.Text.IndexOf(">") + 1).Trim();
-
-                            rtbInput.Invoke((MethodInvoker)delegate
-                            {
-                                rtbInput.Text += $"\nCreated new message: {incomeMessage} | {replyMessage}\n" +
-                                                 $"User Id: {message.Chat.Id}\n";
-                            });
-
-                            Commands.CreateMessage(incomeMessage, replyMessage);
-
-                            await Bot.SendTextMessageAsync(message.Chat.Id, $"Add message: {incomeMessage} | {replyMessage}", replyToMessageId: message.MessageId);
-                            break;
                         }
-                        
-                    }
 
-                    var messanges = messageContext.Messanges;
-                    var answer = messanges.Where(x => x.IncomeMessage == message.Text.ToLower()).ToList();
+                        var messanges = messageContext.Messanges;
+                        var answer = messanges.Where(x => x.IncomeMessage == message.Text.ToLower()).ToList();
 
-                    if (answer.Count != 0)
-                    {
-                        if (answer.Count > 1)
+                        if (answer.Count != 0)
                         {
-                            i = rnd.Next(0, answer.Count);
-                            await Bot.SendTextMessageAsync(message.Chat.Id, answer[i].ReplyMessage, replyToMessageId: message.MessageId);
+                            if (answer.Count > 1)
+                            {
+                                i = rnd.Next(0, answer.Count);
+                                await Bot.SendTextMessageAsync(message.Chat.Id, answer[i].ReplyMessage, replyToMessageId: message.MessageId);
+                                break;
+                            }
+
+                            await Bot.SendTextMessageAsync(message.Chat.Id, answer[0].ReplyMessage, replyToMessageId: message.MessageId);
                             break;
                         }
+                        else
+                            await Bot.SendTextMessageAsync(message.Chat.Id, "Unknown command", replyToMessageId: message.MessageId);
 
-                        await Bot.SendTextMessageAsync(message.Chat.Id, answer[0].ReplyMessage, replyToMessageId: message.MessageId);
                         break;
-                    }
-                    else
-                        await Bot.SendTextMessageAsync(message.Chat.Id, "Unknown command", replyToMessageId: message.MessageId);
-                    
-                    break; 
 
+                }
             }
+            catch { }
+            
         }
 
         private void btnStart_Click(object sender, EventArgs e)
