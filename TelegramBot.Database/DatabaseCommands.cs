@@ -18,33 +18,54 @@ namespace TelegramBot.Database
         //static MainContext context = new MainContext();
         private static Random rnd = new Random();
 
-        //public static List<string> DownloadImages(ImageType type)
-        //{
-        //    List<string> imageArr = new List<string>();
+        public static List<string> DownloadImages(ImageType type)
+        {
+            List<string> imageArr = new List<string>();
 
-        //    switch (type)
-        //    {
-        //        case ImageType.Cat:
-        //            var cats = context.Cats;
-        //            foreach (CatImages image in cats)
-        //            {
-        //                if (image.ImageUrl != null)
-        //                    imageArr.Add(image.ImageUrl);
-        //            }
-        //            break;
-        //        case ImageType.Wallpaper:
-        //            var wallpapers = context.Wallpapers;
+            switch (type)
+            {
+                case ImageType.Cat:
+                    using (MainContext context = new MainContext())
+                    {
+                        var images = context.Cats;
+                        foreach (CatImages image in images)
+                        {
+                            if (image.ImageUrl != null)
+                                imageArr.Add(image.ImageUrl);
+                        }
+                    }
+                    break;
+                case ImageType.Wallpaper:
+                    using (MainContext context = new MainContext())
+                    {
+                        var images = context.Wallpapers;
 
-        //            foreach (Wallpapers image in wallpapers)
-        //            {
-        //                if (image.ImageUrl != null)
-        //                    imageArr.Add(image.ImageUrl);
-        //            }
-        //            break;
-        //    }
+                        foreach (Wallpapers image in images)
+                        {
+                            if (image.ImageUrl != null)
+                                imageArr.Add(image.ImageUrl);
+                        }
+                    }
+                    break;
+            }
 
-        //    return imageArr;
-        //}
+            return imageArr;
+        }
+
+        public static List<Message> GetMessages()
+        {
+            List<Message> messages = new List<Message>(); 
+            using (MainContext context = new MainContext())
+            {
+                var msgs = context.Messanges;
+                foreach(var i in msgs)
+                {
+                    messages.Add(i);
+                }
+
+                return messages; 
+            }
+        }
 
         public static async void CreateMessage(string income, string reply)
         {
@@ -53,7 +74,9 @@ namespace TelegramBot.Database
                 Message model = new Message
                 {
                     IncomeMessage = income,
-                    ReplyMessage = reply
+                    ReplyMessage = reply,
+                    CreationDate = DateTime.Now,
+                    ChatId = 0
                 };
 
                 context.Messanges.Add(model);

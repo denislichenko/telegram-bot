@@ -139,7 +139,7 @@ namespace TelegramBot
                         }
 
                         var messanges = messageContext.Messanges;
-                        var answer = messanges.Where(x => x.IncomeMessage == message.Text.ToLower()).ToList();
+                        var answer = messanges.Where(x => message.Text.ToLower().Contains(x.IncomeMessage.ToLower())).ToList();
 
                         if (answer.Count != 0)
                         {

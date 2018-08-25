@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace TelegramBot.Database.Models
 {
-    class MainContext : DbContext
+    public class MainContext : DbContext
     {
-        public MainContext() : base("DbConnection") { }
+        public MainContext() : base("DBConnection") { }
 
         public DbSet<CatImages> Cats { get; set; }
         public DbSet<Message> Messanges { get; set; }
