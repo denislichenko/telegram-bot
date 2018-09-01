@@ -67,7 +67,7 @@ namespace TelegramBot.Database
             }
         }
 
-        public static async void CreateMessage(string income, string reply)
+        public static async void CreateMessage(string income, string reply, long chatId)
         {
             using (MainContext context = new MainContext())
             {
@@ -76,7 +76,7 @@ namespace TelegramBot.Database
                     IncomeMessage = income,
                     ReplyMessage = reply,
                     CreationDate = DateTime.Now,
-                    ChatId = 0
+                    ChatId = chatId
                 };
 
                 context.Messanges.Add(model);

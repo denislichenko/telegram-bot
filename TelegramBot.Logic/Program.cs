@@ -15,56 +15,55 @@ namespace TelegramBot.Logic
     {
         public static MainContext context = new MainContext();
         public static BackgroundWorker bw;
-        public static Telegram.Bot.TelegramBotClient Bot;
-        public static string[] blackList = { "0" };
+        public static List<string> CatImages;
+        public static List<string> WallpaperImages;
+        public static List<Database.Models.Message> messages; 
 
         static void Main(string[] args)
         {
-            bw = new BackgroundWorker();
-            bw.DoWork += bw_DoWorkAsync;
-            bw.RunWorkerAsync("661233574:AAFLUWfYhQ9fbV4Oi5U2MrtwNz2OwyVZfbg");
-            SuccessMessage("Bot has been started!");
+            BotConsole.SuccessMessage("Loading...");
+            messages = DatabaseCommands.GetMessages();
+            CatImages = DatabaseCommands.DownloadImages(ImageType.Cat);
+            WallpaperImages = DatabaseCommands.DownloadImages(ImageType.Wallpaper);
+
+            BotConfiguration.Bot = new Telegram.Bot.TelegramBotClient("661233574:AAFLUWfYhQ9fbV4Oi5U2MrtwNz2OwyVZfbg");
+            BotConfiguration.Bot.OnMessage += OnMessageReceived;
+            BotConfiguration.Bot.OnMessageEdited += OnMessageReceived;
+            BotConfiguration.Bot.OnCallbackQuery += OnCallBackQueryReceived;
+            BotConfiguration.Bot.OnReceiveError += OnReceiveError;
+
+            BotConfiguration.Bot.StartReceiving(Array.Empty<UpdateType>());
+
+            BotConsole.SuccessMessage("Bot has been started!");
             Console.ReadKey();
         }
 
         public static async void bw_DoWorkAsync(object sender, DoWorkEventArgs e)
         {
             var key = e.Argument as String;
-            Bot = new Telegram.Bot.TelegramBotClient("661233574:AAFLUWfYhQ9fbV4Oi5U2MrtwNz2OwyVZfbg");
-            Bot.OnMessage += OnMessageReceived;
-            Bot.OnMessageEdited += OnMessageReceived;
-            Bot.OnCallbackQuery += OnCallBackQueryReceived;
-            Bot.OnInlineQuery += OnInlineQueryReceived;
-            Bot.OnInlineResultChosen += OnInlineResultChosenReveived;
-            Bot.OnReceiveError += OnReceiveError;
+            BotConfiguration.Bot = new Telegram.Bot.TelegramBotClient("661233574:AAFLUWfYhQ9fbV4Oi5U2MrtwNz2OwyVZfbg");
+            BotConfiguration.Bot.OnMessage += OnMessageReceived;
+            BotConfiguration.Bot.OnMessageEdited += OnMessageReceived;
+            BotConfiguration.Bot.OnCallbackQuery += OnCallBackQueryReceived;
+            BotConfiguration.Bot.OnReceiveError += OnReceiveError;
 
-            Bot.StartReceiving(Array.Empty<UpdateType>());
+            BotConfiguration.Bot.StartReceiving(Array.Empty<UpdateType>());
         }
 
         private static void OnReceiveError(object sender, ReceiveErrorEventArgs e)
         {
-            ErrorMessage(string.Format("Received error: {0} - {1}",
+            BotConsole.ErrorMessage(string.Format("Received error: {0} - {1}",
                 e.ApiRequestException.ErrorCode,
                 e.ApiRequestException.Message));
-        }
-
-        private static void OnInlineResultChosenReveived(object sender, ChosenInlineResultEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void OnInlineQueryReceived(object sender, InlineQueryEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private static async void OnCallBackQueryReceived(object sender, CallbackQueryEventArgs e)
         {
             var callbackQuery = e.CallbackQuery;
-            await Bot.AnswerCallbackQueryAsync(
+            await BotConfiguration.Bot.AnswerCallbackQueryAsync(
                 callbackQuery.Id,
                 $"Received {callbackQuery.Data}");
-            await Bot.SendTextMessageAsync(
+            await BotConfiguration.Bot.SendTextMessageAsync(
                 callbackQuery.Message.Chat.Id,
                 $"Received {callbackQuery.Data}");
         }
@@ -72,11 +71,10 @@ namespace TelegramBot.Logic
         private static async void OnMessageReceived(object sender, MessageEventArgs e)
         {
             var message = e.Message;
-            Random rnd = new Random();
-            int i;
             Telegram.Bot.Types.FileToSend fileSend;
+            Random rnd = new Random(); 
 
-            SuccessMessage(string.Format("MSG ID - {0} | Text - {1} | ChatId - {2}",
+            BotConsole.SuccessMessage(string.Format("ID: {0} | TEXT: {1} | ChatID: {2}",
                 message.MessageId, message.Text.ToString(), message.Chat.Id));
 
             try
@@ -84,88 +82,47 @@ namespace TelegramBot.Logic
                 switch (message.Text.ToLower())
                 {
                     case "/start":
-                        await Bot.SendTextMessageAsync(message.Chat.Id, "Start", replyToMessageId: message.MessageId);
+                        await BotConfiguration.Bot.SendTextMessageAsync(message.Chat.Id, "Start", replyToMessageId: message.MessageId);
                         break;
 
                     case "/sendcat":
-                        fileSend.Url = null;
-                        await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Meow!");
+                        fileSend.Url = BotUtilities.ReturnRandomUrl(CatImages);
+                        await BotConfiguration.Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Meow!");
                         break;
                     case "/wallpaper":
-                        fileSend.Url = null;
-
-                        await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
+                        fileSend.Url = BotUtilities.ReturnRandomUrl(WallpaperImages); ;
+                        await BotConfiguration.Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
                         break;
                     default:
-
                         if (message.Text.Contains(">"))
                         {
-                            foreach (string userId in blackList)
-                            {
-                                if (message.Chat.Id.ToString() == userId)
-                                {
-                                    await Bot.SendTextMessageAsync(message.Chat.Id, $"You were deprived of this royal opportunity! :((", replyToMessageId: message.MessageId);
-                                    break;
-                                }
-
-                                string incomeMessage = message.Text.Substring(0, message.Text.IndexOf(">")).Trim().ToLower();
-                                string replyMessage = message.Text.Substring(message.Text.IndexOf(">") + 1).Trim();
-
-                                SuccessMessage(string.Format($"\nCreated new message: {incomeMessage} | {replyMessage}\n" +
-                                                             $"User Id: {message.Chat.Id}\n"));
-
-                                DatabaseCommands.CreateMessage(incomeMessage, replyMessage);
-
-                                await Bot.SendTextMessageAsync(message.Chat.Id, $"Add message: {incomeMessage} | {replyMessage}", replyToMessageId: message.MessageId);
-                                break;
-                            }
-
+                            BotUtilities.CreateMessage(message);    
+                            BotConsole.SuccessMessage("Done");
+                            break;
                         }
 
-                        var messanges = DatabaseCommands.GetMessages();
-                        var answer = messanges.Where(x => message.Text.ToLower().Contains(x.IncomeMessage.ToLower())).ToList();
-
+                        List<string> answer = messages.Where(x => message.Text.ToLower().Contains(x.IncomeMessage.ToLower()))
+                                                      .Select(x => x.ReplyMessage).ToList();
                         if (answer.Count != 0)
                         {
                             if (answer.Count > 1)
                             {
-                                i = rnd.Next(0, answer.Count);
-                                await Bot.SendTextMessageAsync(message.Chat.Id, answer[i].ReplyMessage, replyToMessageId: message.MessageId);
+                                int i = rnd.Next(0, answer.Count);
+                                BotUtilities.SendMessage(message, answer[i]);
                                 break;
                             }
-
-                            await Bot.SendTextMessageAsync(message.Chat.Id, answer[0].ReplyMessage, replyToMessageId: message.MessageId);
+                            BotUtilities.SendMessage(message, answer[0]);
                             break;
                         }
-                        else
-                            await Bot.SendTextMessageAsync(message.Chat.Id, "Unknown command", replyToMessageId: message.MessageId);
-
+                        BotUtilities.SendMessage(message, "Unknown command");
                         break;
-
-
                 }
             }
             catch(Exception ex)
             {
-                ErrorMessage(ex.Message);
+                BotConsole.ErrorMessage(ex.Message);
             }
 
-        }
-
-        public static void SuccessMessage(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(" > ");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine($"| {message}");
-        }
-
-        public static void ErrorMessage(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(" x ");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine($"| {message}");
         }
     }
 }

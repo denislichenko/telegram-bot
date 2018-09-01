@@ -103,10 +103,8 @@ namespace TelegramBot
                     case "/wallpaper":
                         // Отправляем пользователю рандомное изображение 
                         i = rnd.Next(0, WallpaperImages.Count);
-
                         Uri wallpaper = new Uri(WallpaperImages[i]);
                         fileSend.Url = wallpaper;
-
                         await Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
                         break;
                     default:
