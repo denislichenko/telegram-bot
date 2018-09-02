@@ -16,7 +16,6 @@ namespace TelegramBot.Logic
     class Program
     {
         public static MainContext context = new MainContext();
-        public static BackgroundWorker bw;
         public static List<string> CatImages;
         public static List<string> WallpaperImages;
         public static List<Database.Models.Message> messages;
@@ -38,18 +37,6 @@ namespace TelegramBot.Logic
 
             BotConsole.SuccessMessage("Bot has been started!");
             Console.ReadKey();
-        }
-
-        public static async void bw_DoWorkAsync(object sender, DoWorkEventArgs e)
-        {
-            var key = e.Argument as String;
-            BotConfiguration.Bot = new Telegram.Bot.TelegramBotClient("661233574:AAFLUWfYhQ9fbV4Oi5U2MrtwNz2OwyVZfbg");
-            BotConfiguration.Bot.OnMessage += OnMessageReceived;
-            BotConfiguration.Bot.OnMessageEdited += OnMessageReceived;
-            BotConfiguration.Bot.OnCallbackQuery += OnCallBackQueryReceived;
-            BotConfiguration.Bot.OnReceiveError += OnReceiveError;
-
-            BotConfiguration.Bot.StartReceiving(Array.Empty<UpdateType>());
         }
 
         private static void OnReceiveError(object sender, ReceiveErrorEventArgs e)
@@ -116,7 +103,7 @@ namespace TelegramBot.Logic
                             break;
                         }
                         BotUtilities.SendMessage(message, "Unknown command! Send message format:\n" +
-                            "{income message}>{outgoing message}, so that I can remember the answer!");
+                            "{income message}>{outgoing message}, so that I can remember the answer!", status: false);
                         break;
                 }
             }
