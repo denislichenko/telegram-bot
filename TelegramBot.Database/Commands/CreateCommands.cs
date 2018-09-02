@@ -69,11 +69,11 @@ namespace TelegramBot.Database
                 context.Admins.Add(new Models.Users.Admin
                 {
                     ChatId = chatId,
-                    Level = level != null ? level : -1,
+                    Level = level,
                     Name = name,
                     CreateDate = DateTime.Now
                 });
-                await context.SaveChangesAsync(); 
+                await context.SaveChangesAsync();
             }
         }
 
