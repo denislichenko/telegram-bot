@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TelegramBot.Database.Models;
+using TelegramBot.Database.Models.Messanges;
+using TelegramBot.Database.Models.Users;
 
 namespace TelegramBot.Database
 {
@@ -13,12 +15,13 @@ namespace TelegramBot.Database
         Wallpaper
     }
 
-    public static class DatabaseCommands
+    public static class GetCommands
     {
         //static MainContext context = new MainContext();
         private static Random rnd = new Random();
 
-        public static List<string> DownloadImages(ImageType type)
+        #region Images
+        public static List<string> GetImages(ImageType type)
         {
             List<string> imageArr = new List<string>();
 
@@ -51,7 +54,9 @@ namespace TelegramBot.Database
 
             return imageArr;
         }
+        #endregion
 
+        #region Messages
         public static List<Message> GetMessages()
         {
             List<Message> messages = new List<Message>(); 
@@ -67,21 +72,50 @@ namespace TelegramBot.Database
             }
         }
 
-        public static async void CreateMessage(string income, string reply, long chatId)
+        public static List<IncomeMessage> GetIncomeMessages()
         {
+            List<IncomeMessage> incomeMessages = new List<IncomeMessage>();
             using (MainContext context = new MainContext())
             {
-                Message model = new Message
+                foreach(var msg in context.IncomeMessages)
                 {
-                    IncomeMessage = income,
-                    ReplyMessage = reply,
-                    CreationDate = DateTime.Now,
-                    ChatId = chatId
-                };
+                    incomeMessages.Add(msg); 
+                }
+            }
 
-                context.Messanges.Add(model);
-                await context.SaveChangesAsync();
-            }    
+            return incomeMessages; 
         }
+#endregion
+
+        #region Users
+        public static List<Admin> GetAdmins()
+        {
+            List<Admin> admins = new List<Admin>();
+            using (MainContext context = new MainContext())
+            {
+                foreach(var admin in context.Admins)
+                {
+                    admins.Add(admin);
+                }
+            }
+
+            return admins;
+        }
+
+        public static List<BlackList> GetBlackList()
+        {
+            List<BlackList> blackList = new List<BlackList>();
+            using (MainContext context = new MainContext())
+            {
+                foreach(var user in context.BlackList)
+                {
+                    blackList.Add(user);
+                }
+                return blackList;
+            }
+
+            
+        }
+        #endregion
     }
 }

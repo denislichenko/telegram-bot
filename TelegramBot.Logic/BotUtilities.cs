@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TelegramBot.Database;
+using TelegramBot.Database.Models.Users;
 
 namespace TelegramBot.Logic
 {
@@ -11,16 +12,21 @@ namespace TelegramBot.Logic
     {
         public static void CreateMessage(Telegram.Bot.Types.Message message)
         {
-            string income = message.Text.Substring(0, message.Text.IndexOf(">")).Trim().ToLower();
-            string outgoing = message.Text.Substring(message.Text.IndexOf(">") + 1).Trim();
-            DatabaseCommands.CreateMessage(income, outgoing, message.Chat.Id);
+            if (!GetCommands.GetBlackList().Select(x => x.ChatId).Contains(message.Chat.Id))
+            {
+                string income = message.Text.Substring(0, message.Text.IndexOf(">")).Trim().ToLower();
+                string outgoing = message.Text.Substring(message.Text.IndexOf(">") + 1).Trim();
+                CreateCommands.CreateMessage(income, outgoing, message.Chat.Id);
 
-            BotConsole.SuccessMessage(string.Format($"Created new message: {income} | {outgoing}\n" +
-                                         $"User Id: {message.Chat.Id}\n"));
+                BotConsole.SuccessMessage(string.Format($"Created new message: {income} | {outgoing}\n" +
+                                             $"User Id: {message.Chat.Id}\n"));
 
-            SendMessage(message, $"You have created a message.\n" +
-                                 $"Incoming message: {income}\n" +
-                                 $"Outgoing message: {outgoing}");
+                SendMessage(message, $"You have created a message.\n" +
+                                     $"Incoming message: {income}\n" +
+                                     $"Outgoing message: {outgoing}");
+            }
+            else
+                SendMessage(message, "You are not allowed to use this function");
         }
 
         public static Uri ReturnRandomUrl(List<string> list)

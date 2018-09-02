@@ -8,6 +8,8 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 using TelegramBot.Database;
 using TelegramBot.Database.Models;
+using System.Data.Entity;
+using TelegramBot.Database.Models.Users;
 
 namespace TelegramBot.Logic
 {
@@ -17,14 +19,14 @@ namespace TelegramBot.Logic
         public static BackgroundWorker bw;
         public static List<string> CatImages;
         public static List<string> WallpaperImages;
-        public static List<Database.Models.Message> messages; 
+        public static List<Database.Models.Message> messages;
 
         static void Main(string[] args)
-        {
+        { 
             BotConsole.SuccessMessage("Loading...");
-            messages = DatabaseCommands.GetMessages();
-            CatImages = DatabaseCommands.DownloadImages(ImageType.Cat);
-            WallpaperImages = DatabaseCommands.DownloadImages(ImageType.Wallpaper);
+            messages = GetCommands.GetMessages();
+            CatImages = GetCommands.GetImages(ImageType.Cat);
+            WallpaperImages = GetCommands.GetImages(ImageType.Wallpaper);
 
             BotConfiguration.Bot = new Telegram.Bot.TelegramBotClient("661233574:AAFLUWfYhQ9fbV4Oi5U2MrtwNz2OwyVZfbg");
             BotConfiguration.Bot.OnMessage += OnMessageReceived;
@@ -97,7 +99,6 @@ namespace TelegramBot.Logic
                         if (message.Text.Contains(">"))
                         {
                             BotUtilities.CreateMessage(message);    
-                            BotConsole.SuccessMessage("Done");
                             break;
                         }
 
@@ -114,7 +115,8 @@ namespace TelegramBot.Logic
                             BotUtilities.SendMessage(message, answer[0]);
                             break;
                         }
-                        BotUtilities.SendMessage(message, "Unknown command");
+                        BotUtilities.SendMessage(message, "Unknown command! Send message format:\n" +
+                            "{income message}>{outgoing message}, so that I can remember the answer!");
                         break;
                 }
             }
