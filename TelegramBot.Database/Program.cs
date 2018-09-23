@@ -11,9 +11,18 @@ namespace TelegramBot.Database
     {
         static void Main(string[] args)
         {
-            var messages = DatabaseCommands.GetMessages();
-            Console.WriteLine(messages.Count());
-            Console.ReadLine(); 
+            Console.WriteLine("Hello world!");
+            try
+            {
+                MainContext context = new MainContext();
+                Console.WriteLine(context.Messanges.Count());
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message); 
+            }
+            
+            Console.ReadKey(); 
         }
     }
 }

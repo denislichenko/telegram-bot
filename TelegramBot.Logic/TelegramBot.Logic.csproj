@@ -132,6 +132,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotConfiguration.cs" />
+    <Compile Include="BotConsole.cs" />
+    <Compile Include="BotUtilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
