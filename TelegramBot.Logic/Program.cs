@@ -22,17 +22,17 @@ namespace TelegramBot.Logic
 
         static void Main(string[] args)
         {
+            Start();
             Console.ReadKey();
         }
 
         public static void Start()
         {
             BotConsole.SuccessMessage("Loading...");
-            messages = GetCommands.GetMessages();
             CatImages = GetCommands.GetImages(ImageType.Cat);
             WallpaperImages = GetCommands.GetImages(ImageType.Wallpaper);
 
-            BotConfiguration.Bot = new Telegram.Bot.TelegramBotClient("661233574:AAFLUWfYhQ9fbV4Oi5U2MrtwNz2OwyVZfbg");
+            BotConfiguration.Bot = new Telegram.Bot.TelegramBotClient("");
             BotConfiguration.Bot.OnMessage += OnMessageReceived;
             BotConfiguration.Bot.OnMessageEdited += OnMessageReceived;
             BotConfiguration.Bot.OnCallbackQuery += OnCallBackQueryReceived;
@@ -94,6 +94,7 @@ namespace TelegramBot.Logic
                             break;
                         }
 
+                        messages = GetCommands.GetMessages();
                         List<string> answer = messages.Where(x => message.Text.ToLower().Contains(x.IncomeMessage.ToLower()))
                                                       .Select(x => x.ReplyMessage).ToList();
                         if (answer.Count != 0)
