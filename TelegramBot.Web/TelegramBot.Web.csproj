@@ -18,4 +18,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TelegramBot.Database\TelegramBot.Database.csproj" />
+    <ProjectReference Include="..\TelegramBot.Logic\TelegramBot.Logic.csproj" />
+  </ItemGroup>
+
 </Project>

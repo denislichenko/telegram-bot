@@ -21,7 +21,12 @@ namespace TelegramBot.Logic
         public static List<Database.Models.Message> messages;
 
         static void Main(string[] args)
-        { 
+        {
+            Console.ReadKey();
+        }
+
+        public static void Start()
+        {
             BotConsole.SuccessMessage("Loading...");
             messages = GetCommands.GetMessages();
             CatImages = GetCommands.GetImages(ImageType.Cat);
@@ -34,9 +39,9 @@ namespace TelegramBot.Logic
             BotConfiguration.Bot.OnReceiveError += OnReceiveError;
 
             BotConfiguration.Bot.StartReceiving(Array.Empty<UpdateType>());
+            BotConfiguration.Status = true;
 
             BotConsole.SuccessMessage("Bot has been started!");
-            Console.ReadKey();
         }
 
         private static void OnReceiveError(object sender, ReceiveErrorEventArgs e)

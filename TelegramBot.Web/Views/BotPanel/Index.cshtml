@@ -1,0 +1,21 @@
+﻿@using TelegramBot.Logic
+
+@{
+    ViewData["Title"] = "Telegram Bot";
+    string statusClass = BotConfiguration.Status ? "status-true" : "status-false";
+}
+
+<div class="content">
+    <section class="bot">
+        <div class="bot-photo">
+            <img src="img/photo_2018-06-07_21-44-23.jpg">
+        </div>
+        <div class="bot-text">
+            <h3 class="bot-text__title">Telegram Bot <span class=@statusClass>•</span></h3>
+            <div class="bot-text__buttons">
+                <button class="btn btn-success btn-sm">Start</button>
+                <button class="btn btn-primary btn-sm">Control Panel</button>
+            </div>
+        </div>
+    </section>
+</div>
