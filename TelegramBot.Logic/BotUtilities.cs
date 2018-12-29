@@ -39,10 +39,17 @@ namespace TelegramBot.Logic
             return result; 
         }
 
-        public static async void SendMessage(Telegram.Bot.Types.Message message, string answerText, bool status = true)
+        public static async void SendMessage(Telegram.Bot.Types.Message message, string messageText, bool status = true)
         {
-            await BotConfiguration.Bot.SendTextMessageAsync(message.Chat.Id, answerText, replyToMessageId: message.MessageId);
-            CreateCommands.CreateIncomeMessage(message.Chat.Id, message.Text.ToString(), status); 
+            await BotConfiguration.Bot.SendTextMessageAsync(
+                chatId: message.Chat.Id,
+                text: messageText,
+                replyToMessageId: message.MessageId
+                );
+            CreateCommands.CreateIncomeMessage(
+                chatId: message.Chat.Id,
+                messageText: message.Text.ToString(),
+                messageStatus: status); 
         }
     }
 }

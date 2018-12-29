@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using Telegram.Bot.Args;
 using System.Linq;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types;
 using TelegramBot.Database;
 using TelegramBot.Database.Models;
-using System.Data.Entity;
-using TelegramBot.Database.Models.Users;
 
 namespace TelegramBot.Logic
 {
@@ -76,7 +71,15 @@ namespace TelegramBot.Logic
                 switch (message.Text.ToLower())
                 {
                     case "/start":
-                        await BotConfiguration.Bot.SendTextMessageAsync(message.Chat.Id, "Start", replyToMessageId: message.MessageId);
+                        string welcomeMessage = string.Format("Првет! Я Супер Котяра! Я могу защитить тебя! (но мне лень)\n" +
+                            "Я могу отправить тебе фотку своих бро - /sendcat ,\n" +
+                            "А также выбрать тебе новые обои на рабочий стол - /wallpaper . \n" +
+                            "НО ЭТО НЕ ФСЁ! Также я учу новые слова и ты должен мне помочь!\n" +
+                            "Почему ты? Потому что мой хАзяин (@denislichenko) сказал, что ему леьн!\n" +
+                            "А Я НЕ ХОЧУ БЫТЬ ТУПЫМ КОТОМ! ПОЭТОМУ ПОМОООГИ МНЕ!\n\n" +
+                            "Что-бы добавить новую фразу введи: \n" +
+                            "входящее_сообщение>исходящее_сообщение");
+                        await BotConfiguration.Bot.SendTextMessageAsync(message.Chat.Id, welcomeMessage, replyToMessageId: message.MessageId);
                         break;
 
                     case "/sendcat":
