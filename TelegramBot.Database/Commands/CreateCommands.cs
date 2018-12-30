@@ -45,15 +45,15 @@ namespace TelegramBot.Database
             }
         }
 
-        public static async void CreateIncomeMessage(long chatId, string message, bool answer)
+        public static async void CreateIncomeMessage(long chatId, string messageText, bool messageStatus)
         {
             using (MainContext context = new MainContext())
             {
                 context.IncomeMessages.Add(new Models.Messanges.IncomeMessage
                 {
                     ChatId = chatId,
-                    Message = message,
-                    Answer = answer,
+                    Message = messageText,
+                    Answer = messageStatus,
                     Date = DateTime.Now
                 });
                 await context.SaveChangesAsync();
