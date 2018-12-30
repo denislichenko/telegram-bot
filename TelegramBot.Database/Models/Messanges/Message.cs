@@ -10,9 +10,10 @@ namespace TelegramBot.Database.Models
     public class Message
     {
         public int Id { get; set; }
+        public long ChatId { get; set; }
+        public string Username { get; set; }
         public string IncomeMessage { get; set; }
         public string ReplyMessage { get; set; }
-        public long ChatId { get; set; }
         public DateTime CreationDate { get; set; }
     }
 }

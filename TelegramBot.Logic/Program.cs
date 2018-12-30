@@ -63,8 +63,8 @@ namespace TelegramBot.Logic
             Telegram.Bot.Types.FileToSend fileSend;
             Random rnd = new Random(); 
 
-            BotConsole.SuccessMessage(string.Format("ID: {0} | TEXT: {1} | ChatID: {2}",
-                message.MessageId, message.Text.ToString(), message.Chat.Id));
+            BotConsole.SuccessMessage(string.Format("ID: {0} | TEXT: {1} | UserName: @{2} | ChatID: {3}",
+                message.MessageId, message.Text.ToString(), message.Chat.Username, message.Chat.Id));
 
             try
             {
@@ -72,14 +72,14 @@ namespace TelegramBot.Logic
                 {
                     case "/start":
                         string welcomeMessage = string.Format("Првет! Я Супер Котяра! Я могу защитить тебя! (но мне лень)\n" +
-                            "Я могу отправить тебе фотку своих бро - /sendcat ,\n" +
-                            "А также выбрать тебе новые обои на рабочий стол - /wallpaper . \n" +
+                            "Я могу отправить тебе фотку своих бро - <code>/sendcat</code> ,\n" +
+                            "А также выбрать тебе новые обои на рабочий стол - <code>/wallpaper</code> . \n" +
                             "НО ЭТО НЕ ФСЁ! Также я учу новые слова и ты должен мне помочь!\n" +
-                            "Почему ты? Потому что мой хАзяин (@denislichenko) сказал, что ему леьн!\n" +
+                            "Почему ты? Потому что мой хАзяин <code>(@denislichenko)</code> сказал, что ему леьн!\n" +
                             "А Я НЕ ХОЧУ БЫТЬ ТУПЫМ КОТОМ! ПОЭТОМУ ПОМОООГИ МНЕ!\n\n" +
                             "Что-бы добавить новую фразу введи: \n" +
-                            "входящее_сообщение>исходящее_сообщение");
-                        await BotConfiguration.Bot.SendTextMessageAsync(message.Chat.Id, welcomeMessage, replyToMessageId: message.MessageId);
+                            "<code>входящее_сообщение>исходящее_сообщение</code>");
+                        BotUtilities.SendMessage(message, welcomeMessage);
                         break;
 
                     case "/sendcat":
@@ -111,8 +111,11 @@ namespace TelegramBot.Logic
                             BotUtilities.SendMessage(message, answer[0]);
                             break;
                         }
-                        BotUtilities.SendMessage(message, "Unknown command! Send message format:\n" +
-                            "{income message}>{outgoing message}, so that I can remember the answer!", status: false);
+                        BotUtilities.SendMessage(
+                            message: message, 
+                            messageText: "Unknown command! Send message format:\n" +
+                                         "<code>income_message>outgoing_message</code>",
+                            status: false);
                         break;
                 }
             }

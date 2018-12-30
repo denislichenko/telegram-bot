@@ -30,7 +30,7 @@ namespace TelegramBot.Database
         #endregion
 
         #region Messages
-        public static async void CreateMessage(string income, string reply, long chatId)
+        public static async void CreateMessage(string income, string reply, long chatId, string username)
         {
             using (MainContext context = new MainContext())
             {
@@ -39,13 +39,14 @@ namespace TelegramBot.Database
                     IncomeMessage = income,
                     ReplyMessage = reply,
                     CreationDate = DateTime.Now,
-                    ChatId = chatId
+                    ChatId = chatId,
+                    Username = username
                 });
                 await context.SaveChangesAsync();
             }
         }
 
-        public static async void CreateIncomeMessage(long chatId, string messageText, bool messageStatus)
+        public static async void CreateIncomeMessage(long chatId, string messageText, bool messageStatus, string username)
         {
             using (MainContext context = new MainContext())
             {
@@ -54,7 +55,8 @@ namespace TelegramBot.Database
                     ChatId = chatId,
                     Message = messageText,
                     Answer = messageStatus,
-                    Date = DateTime.Now
+                    Date = DateTime.Now,
+                    Username = username
                 });
                 await context.SaveChangesAsync();
             }

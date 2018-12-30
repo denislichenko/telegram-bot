@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types.Enums;
 using TelegramBot.Database;
 using TelegramBot.Database.Models.Users;
 
@@ -16,7 +17,7 @@ namespace TelegramBot.Logic
             {
                 string income = message.Text.Substring(0, message.Text.IndexOf(">")).Trim().ToLower();
                 string outgoing = message.Text.Substring(message.Text.IndexOf(">") + 1).Trim();
-                CreateCommands.CreateMessage(income, outgoing, message.Chat.Id);
+                CreateCommands.CreateMessage(income, outgoing, message.Chat.Id, message.Chat.Username);
 
                 BotConsole.SuccessMessage(string.Format($"Created new message: {income} | {outgoing}\n" +
                                              $"User Id: {message.Chat.Id}\n"));
@@ -44,12 +45,14 @@ namespace TelegramBot.Logic
             await BotConfiguration.Bot.SendTextMessageAsync(
                 chatId: message.Chat.Id,
                 text: messageText,
+                parseMode: ParseMode.Html,
                 replyToMessageId: message.MessageId
                 );
             CreateCommands.CreateIncomeMessage(
                 chatId: message.Chat.Id,
                 messageText: message.Text.ToString(),
-                messageStatus: status); 
+                messageStatus: status,
+                username: message.Chat.Username); 
         }
     }
 }

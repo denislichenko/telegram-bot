@@ -49,6 +49,7 @@
                     <DataGrid AutoGenerateColumns="False" x:Name="messagesGrid">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding ChatId}" Header="ChatId" Width="70"/>
+                            <DataGridTextColumn Binding="{Binding Username}" Header="Username" Width="150"/>
                             <DataGridTextColumn Binding="{Binding IncomeMessage}" Header="IncomeMessage" Width="150"/>
                             <DataGridTextColumn Binding="{Binding ReplyMessage}" Header="ReplyMessage" Width="150"/>
                             <DataGridTextColumn Binding="{Binding CreationDate}" Header="Date" Width="110" />
@@ -112,6 +113,7 @@
                     <DataGrid AutoGenerateColumns="False" x:Name="incomeMessagesGrid">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding ChatId}" Header="ChatId" Width="70"/>
+                            <DataGridTextColumn Binding="{Binding Username}" Header="Username" Width="150"/>
                             <DataGridTextColumn Binding="{Binding Message}" Header="Message" Width="150"/>
                             <DataGridTextColumn Binding="{Binding Answer}" Header="Answer" Width="150"/>
                             <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="110" />

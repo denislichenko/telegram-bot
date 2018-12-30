@@ -62,6 +62,14 @@
     <Compile Include="Migrations\201809021549256_IncomeMessage.Designer.cs">
       <DependentUpon>201809021549256_IncomeMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812301833506_UserNames.cs" />
+    <Compile Include="Migrations\201812301833506_UserNames.Designer.cs">
+      <DependentUpon>201812301833506_UserNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812301847351_UserNameFix.cs" />
+    <Compile Include="Migrations\201812301847351_UserNameFix.Designer.cs">
+      <DependentUpon>201812301847351_UserNameFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Images\CatImages.cs" />
     <Compile Include="Models\MainContext.cs" />
@@ -92,6 +100,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809021549256_IncomeMessage.resx">
       <DependentUpon>201809021549256_IncomeMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812301833506_UserNames.resx">
+      <DependentUpon>201812301833506_UserNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812301847351_UserNameFix.resx">
+      <DependentUpon>201812301847351_UserNameFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
