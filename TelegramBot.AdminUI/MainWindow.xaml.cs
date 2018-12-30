@@ -61,14 +61,28 @@ namespace TelegramBot.AdminUI
             }
         }
 
-        private void deleteAdminButton_Click(object sender, RoutedEventArgs e)
+        private async void deleteAdminButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (adminsGrid.SelectedItems.Count > 0)
+            {
+                foreach (var i in adminsGrid.SelectedItems)
+                {
+                    db.Messanges.Remove(i as Message);
+                }
+                await db.SaveChangesAsync();
+            }
         }
 
-        private void unblockButton_Click(object sender, RoutedEventArgs e)
+        private async void unblockButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (blackListGrid.SelectedItems.Count > 0)
+            {
+                foreach (var i in blackListGrid.SelectedItems)
+                {
+                    db.Messanges.Remove(i as Message);
+                }
+                await db.SaveChangesAsync();
+            }
         }
     }
 }
