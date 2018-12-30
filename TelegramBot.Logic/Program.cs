@@ -27,7 +27,7 @@ namespace TelegramBot.Logic
             CatImages = GetCommands.GetImages(ImageType.Cat);
             WallpaperImages = GetCommands.GetImages(ImageType.Wallpaper);
 
-            BotConfiguration.Bot = new Telegram.Bot.TelegramBotClient("");
+            BotConfiguration.Bot = new Telegram.Bot.TelegramBotClient("771870602:AAHnTNT7Ffl2qC1uaUrsEjsk5_XfPVZHTMY");
             BotConfiguration.Bot.OnMessage += OnMessageReceived;
             BotConfiguration.Bot.OnMessageEdited += OnMessageReceived;
             BotConfiguration.Bot.OnCallbackQuery += OnCallBackQueryReceived;
