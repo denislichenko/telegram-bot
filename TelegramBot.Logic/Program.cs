@@ -61,10 +61,9 @@ namespace TelegramBot.Logic
         {
             var message = e.Message;
             Telegram.Bot.Types.FileToSend fileSend;
-            Random rnd = new Random(); 
+            Random rnd = new Random();
 
-            BotConsole.SuccessMessage(string.Format("ID: {0} | TEXT: {1} | UserName: @{2} | ChatID: {3}",
-                message.MessageId, message.Text.ToString(), message.Chat.Username, message.Chat.Id));
+            BotConsole.SuccessMessage($"@{message.Chat.Username}: {message.Text}");
 
             try
             {
@@ -90,6 +89,10 @@ namespace TelegramBot.Logic
                         fileSend.Url = BotUtilities.ReturnRandomUrl(WallpaperImages); ;
                         await BotConfiguration.Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
                         break;
+                    case "/stats":
+                        var stat = BotUtilities.GetStatistic(message.Chat.Username);
+                        BotUtilities.SendMessage(message, stat);
+                        break; 
                     default:
                         if (message.Text.Contains(">"))
                         {

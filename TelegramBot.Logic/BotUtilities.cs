@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types.Enums;
 using TelegramBot.Database;
+using TelegramBot.Database.Models;
 using TelegramBot.Database.Models.Users;
 
 namespace TelegramBot.Logic
 {
     public static class BotUtilities
     {
+        static MainContext db; 
         public static void CreateMessage(Telegram.Bot.Types.Message message)
         {
             if (!GetCommands.GetBlackList().Select(x => x.ChatId).Contains(message.Chat.Id))
@@ -19,12 +21,11 @@ namespace TelegramBot.Logic
                 string outgoing = message.Text.Substring(message.Text.IndexOf(">") + 1).Trim();
                 CreateCommands.CreateMessage(income, outgoing, message.Chat.Id, message.Chat.Username);
 
-                BotConsole.SuccessMessage(string.Format($"Created new message: {income} | {outgoing}\n" +
-                                             $"User Id: {message.Chat.Id}\n"));
+                BotConsole.SuccessMessage($"@{message.Chat.Username}: Created new message: {income} | {outgoing}");
 
                 SendMessage(message, $"You have created a message.\n" +
-                                     $"Incoming message: {income}\n" +
-                                     $"Outgoing message: {outgoing}");
+                                     $"Incoming message: <code>{income}</code>\n" +
+                                     $"Outgoing message: <code>{outgoing}</code>");
             }
             else
                 SendMessage(message, "You are not allowed to use this function");
@@ -37,6 +38,21 @@ namespace TelegramBot.Logic
             Random rnd = new Random();
             int i = rnd.Next(0, list.Count);
             Uri result = new Uri(list[i]);
+            return result; 
+        }
+
+        public static string GetStatistic(string username)
+        {
+            string result = string.Empty;
+            db = new MainContext();
+
+            result = $"Income messages: <code>{db.IncomeMessages.Count()}</code>\n" +
+                     $"Created messages: <code>{db.Messanges.Count()}</code>\n" +
+                     $"Messages from you: <code>{db.IncomeMessages.Where(x => x.Username == username).Count()}</code>\n" +
+                     $"Cats images: <code>{db.Cats.Count()}</code>\n" +
+                     $"Wallpapers: <code>{db.Wallpapers.Count()}</code>\n" +
+                     $"Users in black list: <code>{db.BlackList.Count()}</code>\n";
+
             return result; 
         }
 
