@@ -12,7 +12,7 @@ namespace Database.Models.Messages
         public string ReplyMessage { get; set; }
         public DateTime Date { get; set; }
 
-        public int UserId { get; set; }
+        public int ChatId { get; set; }
         public Chat Chat { get; set; }
     }
 }

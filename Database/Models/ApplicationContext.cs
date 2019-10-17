@@ -17,14 +17,18 @@ namespace Database.Models
         //    Database.EnsureCreated();
         //}
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Message>()
-        //        .HasOne<User>(s => s.User)
-        //        .WithMany(g => g.Messages)
-        //        .HasForeignKey(s => s.UserId)
-        //        .OnDelete(DeleteBehavior.Cascade);
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Chat>(entity =>
+            {
+                entity.HasIndex(x => x.ChatId).IsUnique();
+            });
+            modelBuilder.Entity<Message>()
+                .HasOne<Chat>(s => s.Chat)
+                .WithMany(g => g.Messages)
+                .HasForeignKey(s => s.ChatId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder) 
         {

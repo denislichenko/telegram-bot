@@ -11,9 +11,9 @@ namespace Database.Models.Chats
         public long UserId { get; set; }
         public long ChatId { get; set; }
         public string UserName { get; set; }
-    
-        public short Status { get; set; }
-        public short Step { get; set; }
+
+        public short Status { get; set; } = 0;
+        public short Step { get; set; } = 0;
 
         public ICollection<Message> Messages { get; set; }
     }
