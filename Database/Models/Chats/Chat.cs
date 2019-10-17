@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Database.Models.Chats
 {
-    class Chat
+    public class Chat
     {
         public int Id { get; set; }
         public long UserId { get; set; }

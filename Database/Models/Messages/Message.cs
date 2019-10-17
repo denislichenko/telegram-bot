@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Database.Models.Messages
 {
-    class Message
+    public class Message
     {
         public int Id { get; set; }
         public string IncomeMessage { get; set; }
