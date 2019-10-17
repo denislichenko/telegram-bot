@@ -1,6 +1,9 @@
-﻿using Database.Models;
-using System;
+﻿using System;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Database.Models;
 
 namespace Database
 {
@@ -8,9 +11,9 @@ namespace Database
     {
         static void Main(string[] args)
         {
-            using(ApplicationContext context = new ApplicationContext())
+            using (ApplicationContext context = new ApplicationContext())
             {
-                var usersCount = context.Users.ToList().Count;
+                var usersCount = context.Chats.ToList().Count;
                 var messagesCount = context.Messages.ToList().Count();
                 Console.WriteLine($"Users: {usersCount}\nMessages: {messagesCount}");
             }
