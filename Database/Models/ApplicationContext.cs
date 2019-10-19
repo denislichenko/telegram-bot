@@ -1,11 +1,11 @@
-﻿using Database.Models.Messages;
-using Database.Models.Chats;
+﻿using TelegramBot.Database.Models.Messages;
+using TelegramBot.Database.Models.Chats;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Database.Models
+namespace TelegramBot.Database.Models
 {
     class ApplicationContext : DbContext
     {

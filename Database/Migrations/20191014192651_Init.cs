@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Database.Migrations
+namespace TelegramBot.Database.Migrations
 {
     public partial class Init : Migration
     {

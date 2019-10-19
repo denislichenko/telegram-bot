@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Database.Migrations
+namespace TelegramBot.Database.Migrations
 {
     public partial class AddStatus : Migration
     {

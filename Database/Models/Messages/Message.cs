@@ -1,9 +1,9 @@
-﻿using Database.Models.Chats;
+﻿using TelegramBot.Database.Models.Chats;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Database.Models.Messages
+namespace TelegramBot.Database.Models.Messages
 {
     public class Message
     {

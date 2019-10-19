@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
-using Database.Models;
+using TelegramBot.Database.Models;
 
-namespace Database
+namespace TelegramBot.Database
 {
     class Program
     {

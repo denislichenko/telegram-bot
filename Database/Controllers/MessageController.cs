@@ -1,12 +1,13 @@
-﻿using Database.Models;
-using Database.Models.Messages;
+﻿using TelegramBot.Database.Models;
+using TelegramBot.Database.Models.Messages;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
-namespace Database.Controllers
+namespace TelegramBot.Database.Controllers
 {
     public static class MessageController
     {
@@ -18,6 +19,14 @@ namespace Database.Controllers
                 await context.SaveChangesAsync(); 
             }
         }
+
+        //public static async Task UpdateMessage(Message model)
+        //{
+        //    using(ApplicationContext context = new ApplicationContext())
+        //    {
+        //        var msg = context.Messages.Where(x => x.ChatId )
+        //    }
+        //}
 
         public static async Task<List<Message>> GetMessages()
         {
