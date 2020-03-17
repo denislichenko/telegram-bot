@@ -60,7 +60,6 @@ namespace TelegramBot.Logic
         private static async void OnMessageReceived(object sender, MessageEventArgs e)
         {
             var message = e.Message;
-            Telegram.Bot.Types.FileToSend fileSend;
             Random rnd = new Random();
 
             BotConsole.SuccessMessage($"@{message.Chat.Username}: {message.Text}");
@@ -82,12 +81,12 @@ namespace TelegramBot.Logic
                         break;
 
                     case "/sendcat":
-                        fileSend.Url = BotUtilities.ReturnRandomUrl(CatImages);
-                        await BotConfiguration.Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Meow!");
+                        //fileSend.Url = BotUtilities.ReturnRandomUrl(CatImages);
+                        //await BotConfiguration.Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Meow!");
                         break;
                     case "/wallpaper":
-                        fileSend.Url = BotUtilities.ReturnRandomUrl(WallpaperImages); ;
-                        await BotConfiguration.Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
+                        //fileSend.Url = BotUtilities.ReturnRandomUrl(WallpaperImages); ;
+                        //await BotConfiguration.Bot.SendPhotoAsync(message.Chat.Id, fileSend, "Ты сказал « обои »? Ставь на рабочий стол! :)");
                         break;
                     case "/stats":
                         var stat = BotUtilities.GetStatistic(message.Chat.Username);

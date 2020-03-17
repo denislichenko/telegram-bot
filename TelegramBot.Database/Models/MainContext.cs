@@ -11,7 +11,9 @@ namespace TelegramBot.Database.Models
 {
     public class MainContext : DbContext
     {
-        public MainContext() : base("DBConnection") { }
+        public MainContext() : base("DBConnection") {
+            Database.CreateIfNotExists(); 
+        }
 
         public DbSet<CatImages> Cats { get; set; }
         public DbSet<Message> Messanges { get; set; }
