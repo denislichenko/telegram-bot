@@ -28,7 +28,7 @@ namespace TelegramBot.EchoBot.Events
                     await ChatController.CreateChat(message.Chat.Id, message.From.Id, message.From.Username);
                     await botClient.SendTextMessageAsync(message.Chat.Id, "Started!", replyToMessageId: message.MessageId);
                     break;
-                case "/createmessage":
+                case "/create":
                     await ChatController.SetStep(1, 1, chat); 
                     await botClient.SendTextMessageAsync(message.Chat.Id, "Send input message", replyToMessageId: message.MessageId);
                     break;
