@@ -32,7 +32,7 @@ namespace TelegramBot.Database.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder) 
         {
-            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TelegramBot;Trusted_Connection=True;MultipleActiveResultSets=true");
+            builder.UseSqlServer("Server=(localdb)\\MSSQLLocalDb;Database=TelegramBot;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
     }
 }

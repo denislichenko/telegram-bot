@@ -40,5 +40,11 @@ namespace TelegramBot.Bot.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        public OkResult Post(object model)
+        {
+            return Ok(); 
+        }
     }
 }

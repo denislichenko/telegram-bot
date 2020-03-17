@@ -2,74 +2,67 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
 using TelegramBot.Database.Controllers;
 using TelegramBot.Database.Models.Chats;
-using Bot = TelegramBot.EchoBot.Models.Bot; 
+using Bot = TelegramBot.EchoBot.Models.Bot;
 
 namespace TelegramBot.EchoBot.Events
 {
     public static class MessageEvents
     {
+        private static TelegramBotClient botClient = Bot.GetBotClientAsync();
         public async static void OnMessageReceived(object sender, MessageEventArgs messageEventArgs)
         {
             var message = messageEventArgs.Message;
-            var botClient = Bot.GetBotClientAsync(); 
+
             if (message == null || message.Type != MessageType.Text) return;
 
             var chat = ChatController.GetChat(message.Chat.Id, message.From.Id);
-            if(chat == null || (chat.Status == 0 && chat.Step == 0))
+
+            switch (message.Text.Split(' ').First())
             {
-                switch (message.Text.Split(' ').First())
-                {
-                    case "/start":
-                        await ChatController.CreateChat(new Chat
-                        {
-                            ChatId = message.Chat.Id,
-                            UserId = message.From.Id,
-                            UserName = message.From.Username
-                        });
-                        await botClient.SendTextMessageAsync(message.Chat.Id, "Started!", replyToMessageId: message.MessageId);
-                        break;
-                    case "/createmessage":
-                        await ChatController.UpdateChat(new Chat
-                        {
-                            ChatId = message.Chat.Id,
-                            UserId = message.From.Id,
-                            Status = 1,
-                            Step = 1
-                        });
-                        await botClient.SendTextMessageAsync(message.Chat.Id, "Send input message", replyToMessageId: message.MessageId);
-                        break;
-                }
+                case "/start":
+                    await ChatController.CreateChat(message.Chat.Id, message.From.Id, message.From.Username);
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Started!", replyToMessageId: message.MessageId);
+                    break;
+                case "/createmessage":
+                    await ChatController.SetStep(1, 1, chat); 
+                    await botClient.SendTextMessageAsync(message.Chat.Id, "Send input message", replyToMessageId: message.MessageId);
+                    break;
+                default:
+                    switch (chat.Status)
+                    {
+                        case 1:
+                            CreateMessageDialog(chat, message.Text);
+                            break;
+                        default:
+                            var answer = await MessageController.GetAnswer(message.Text);
+                            await botClient.SendTextMessageAsync(message.Chat.Id, answer);
+                            break; 
+                    }
+                    break;
             }
-            //else
-            //{
-            //    if(chat.Status == 1 && chat.Step == 1)
-            //    {
-            //        await ChatController.UpdateChat(new Chat
-            //        {
-            //            ChatId = message.Chat.Id,
-            //            UserId = message.From.Id,
-            //            Status = 1,
-            //            Step = 2
-            //        });
-            //        await botClient.SendTextMessageAsync(message.Chat.Id, "Send output message", replyToMessageId: message.MessageId); 
-            //    }
-            //    if (chat.Status == 1 && chat.Step == 2)
-            //    {
-            //        await ChatController.UpdateChat(new Chat
-            //        {
-            //            ChatId = message.Chat.Id,
-            //            UserId = message.From.Id,
-            //            Status = 0,
-            //            Step = 0
-            //        });
-            //        await botClient.SendTextMessageAsync(message.Chat.Id, "Done! Message saved!", replyToMessageId: message.MessageId);
-            //    }
-            //}
-            
+
+        }
+
+        public async static void CreateMessageDialog(Chat chat, string messageText)
+        {
+            switch (chat.Step)
+            {
+                case 1:
+                    await MessageController.CreateMessage(messageText, string.Empty, chat.Id);
+                    await ChatController.SetStep(1, 2, chat); 
+                    await botClient.SendTextMessageAsync(chat.ChatId, "Send output message");
+                    break;
+                case 2:
+                    await MessageController.UpdateMessage(messageText, chat.Id); 
+                    await ChatController.SetStep(0, 0, chat); 
+                    await botClient.SendTextMessageAsync(chat.ChatId, "Done! Message saved!");
+                    break;
+            }
         }
     }
 }

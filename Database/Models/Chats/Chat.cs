@@ -8,7 +8,7 @@ namespace TelegramBot.Database.Models.Chats
     public class Chat
     {
         public int Id { get; set; }
-        public long UserId { get; set; }
+        public int UserId { get; set; }
         public long ChatId { get; set; }
         public string UserName { get; set; }
 
